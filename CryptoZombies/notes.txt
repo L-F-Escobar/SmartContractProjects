@@ -1,0 +1,154 @@
+In Ethereum, when you call a function on a contract, you broadcast it to a node or nodes on the network as a transaction. 
+The nodes on the network then collect a bunch of transactions, try to be the first to solve a computationally-intensive mathematical problem as a "Proof of Work", and then publish that group of transactions along with their Proof of Work (PoW) as a block to the rest of the network.
+Once a node has solved the PoW, the other nodes stop trying to solve the PoW, verify that the other node's list of transactions are valid, and then accept the block and move on to trying to solve the next block.
+
+
+TOKEN
+A token on Ethereum is basically just a smart contract that follows some common rules — namely it implements a standard set of functions that all other token contracts share, such as transfer(address _to, uint256 _value) and balanceOf(address _owner).
+ERC20 tokens are really cool for tokens that act like currencies. But they're not particularly useful for representing zombies in our zombie game. For one, zombies aren't divisible like currencies, all zombies are not created equal.
+ERC721 tokens are not interchangeable since each one is assumed to be unique, and are not divisible. You can only trade them in whole units, and each one has a unique ID. So these are a perfect fit for making our zombies tradeable.
+
+
+ARRAYS
+// array with a fixed length of 2 elements:
+uint[2] fixedArray;
+
+// another fixed Array, can contain 5 strings:
+string[5] stringArray;
+
+// a dynamic Array - has no fixed size, can keep growing:
+uint[] dynamicArray;
+
+//  array of structs
+Zombie[] zombie; // dynamic Array, we can keep adding to it
+
+
+TYPECAST
+uint8 a = 5;
+uint b = 6;
+// throws an error because a * b returns a uint, not uint8:
+uint8 c = a * b; 
+// we have to typecast b as a uint8 to make it work:
+uint8 c = a * uint8(b);
+
+
+EVENTS
+Events are a way for your contract to communicate that something 
+happened on the blockchain to your app front-end, which can be 'listening' 
+for certain events and take action when they happen.
+
+
+ADDRESS
+The Ethereum blockchain is made up of accounts, which you can think of like bank accounts.
+an address is owned by a specific user. So we can use it as a unique ID for ownership of 
+our zombies.
+
+
+MAPPING
+A mapping is essentially a key-value store for storing and looking up data.
+// For a financial app, storing a uint that holds the user's account balance:
+mapping (address => uint) public accountBalance;
+// Or could be used to store / lookup usernames based on userId
+mapping (uint => string) userIdToName;
+
+
+MSG.SENDER & MSG.VALUE & ETHER & TRANSFER & THIS.BALANCE
+Global variables are available to all functions. One of these is 
+msg.sender, which refers to the address of the person (or smart contract) who 
+called the current function.
+msg.value is a way to see how much Ether was sent to the contract.
+ether is a built-in unit.
+
+After you send Ether to a contract, it gets stored in the contract's Ethereum account
+transfer Ether to an address using the transfer function. Send funds to any Ethereum address.
+this.balance will return the total balance stored on the contract.
+
+
+keccak256 HASH function
+best source of randomness in Solidity.
+EXAMPLE
+// Generate a random number between 1 and 100:
+uint randNonce = 0;
+uint random = uint(keccak256(now, msg.sender, randNonce)) % 100;
+randNonce++;
+uint random2 = uint(keccak256(now, msg.sender, randNonce)) % 100;
+
+
+REQUIRE
+makes it so that the function will throw an error and stop executing if some 
+condition is not true.
+
+
+STORAGE and MEMORY
+Storage refers to variables stored permanently on the blockchain. Memory 
+variables are temporary, and are erased between external function calls to 
+your contract. 
+
+
+VISABILITY MODIFIERS - control when and where a function can be called from
+    INTERNAL and EXTERNAL and PRIVAET and PUBLIC
+private means it's only callable from other functions inside the contract.
+internal is like private but can also be called by contracts that inherit from this one.
+external can only be called outside the contract. exposed.
+public can be called anywhere, both internally and externally. exposed
+
+
+STATE MODIFIERS - how the function interacts with the BlockChain 
+    VIEW and PURE 
+view tells us that by running the function, no data will be saved/changed, only read data. 
+pure tells us that not only does the function not save any data to the  
+blockchain, but it also doesn't read any data from the blockchain. 
+ 
+Both of these don't cost any gas to call if they're called externally from  
+outside the contract (but they do cost gas if called internally by another  
+function). 
+ 
+ 
+CUSTOM MODIFIERS - can define custom logic to determine how they affect a function 
+
+
+payable MODIFIER
+a special type of function that can receive Ether. 
+ 
+ 
+ALL MODIFIERS TOGETHER 
+function test() external view onlyOwner anotherModifier { /* ... */ }
+
+
+There are extra features we may want to add to our implementation, such as some extra checks to make sure users don't accidentally transfer their zombies to address 0 (which is called "burning" a token — basically it's sent to an address that no one has the private key of, essentially making it unrecoverable). Or to put some basic auction logic in the DApp itself.
+
+
+OVERFLOWS & UNDERFLOWS
+uint8 = 2^8 - 1 = 255
+uint8 number = 255;
+number++;
+number is now equal to 0.
+uint8 number = 0;
+number--;
+number is now equal to 255.
+
+
+LIBRARY
+a special type of contract in Solidity. One of the things it is useful for is to attach functions to native data types.
+using SafeMath for uint256
+The SafeMath library has 4 functions — add, sub, mul, and div.
+using SafeMath for uint256;
+uint256 a = 5;
+uint256 b = a.add(3); // 5 + 3 = 8
+uint256 c = a.mul(2); // 5 * 2 = 10
+
+
+The difference between assert and require is that require will refund the user the rest of their gas when a function fails, whereas assert will not.
+
+
+NATSPEC
+good practice to comment your code.
+@notice explains to a user what the contract / function does. @dev is for explaining extra details to developers. @param and @return are for describing what each parameter and return value of a function are for. At the very least, leave a @dev note explaining what each function does.
+
+/// @title
+/// @author
+/// @notice Multiplies 2 numbers together
+/// @param x the first uint.
+/// @param y the second uint.
+/// @return z the product of (x * y)
+/// @dev This function does not currently check for overflows
