@@ -14,6 +14,7 @@ contract CharacterFactory is Ownable {
     using SafeMath for uint256;
     using SafeMath for uint32;
     using SafeMath for uint16;
+    using SafeMath for uint8;
 
     /// @notice Events.
     event NewCharacter(uint id,
@@ -25,8 +26,10 @@ contract CharacterFactory is Ownable {
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum ArmourTypes {Chest, Helm, Boots, Leggings, Gloves, Shield}
     enum WeaponTypes {Sword, Axe, Wand, Gun, Hammer, Fist}
+    enum RareColor {Grey, Blue, DarkBlue, Purple} // <Left to right> <Common to rare>
     ArmourTypes armour;
     WeaponTypes weapon;
+    RareColor colorTracker;
     uint randNonce = 0;
     uint coowlDown = (1 days) / 4;
     uint digits = 16;
@@ -44,11 +47,9 @@ contract CharacterFactory is Ownable {
         uint16 losses;
         uint16 totalHealth;
         uint16 totalMana;
-        mapping (uint16 => string) weapons;
-        mapping (uint16 => string) armours;
+        mapping (int8 => string) weapons;
+        mapping (int8 => string) armours;
     }
-
-    mapping 
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
@@ -58,7 +59,7 @@ contract CharacterFactory is Ownable {
 
     function _createCharacter(string _name, string _charType, uint _dna) internal {
         uint rdy = (1 days) / 4;
-        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50, [], [])) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50)) - 1;
 
         // Get ownership if zombie and inc total zombies owned.
         characterToOwner[id] = msg.sender;
