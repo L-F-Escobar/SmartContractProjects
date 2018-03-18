@@ -16,7 +16,8 @@ contract CharacterFactory is Ownable {
     using SafeMath for uint16;
 
     /// @notice Events.
-    event NewCharacter(string name,
+    event NewCharacter(uint id,
+                    string name,
                     string charType,
                     uint dna);
 
@@ -26,9 +27,10 @@ contract CharacterFactory is Ownable {
     enum WeaponTypes {Sword, Axe, Wand, Gun, Hammer, Fist}
     ArmourTypes armour;
     WeaponTypes weapon;
+    uint randNonce = 0;
     uint coowlDown = (1 days) / 4;
-    uint dnaDigits = 16;
-    uint dnaModulus = 10 ** dnaDigits; // equal to 10^dnaDigits
+    uint digits = 16;
+    uint modShortener = 10 ** digits; // can later use the modulus operator % to shorten an integer to 16 digits.
     uint cooldownTime = 7 days;
 
     struct Character {
@@ -42,13 +44,40 @@ contract CharacterFactory is Ownable {
         uint16 losses;
         uint16 totalHealth;
         uint16 totalMana;
-        mapping (uint16 => mapping (string => uint16)) weapons;
-        mapping (uint16 => mapping (string => uint16)) armours;
+        mapping (uint16 => string) weapons;
+        mapping (uint16 => string) armours;
     }
+
+    mapping 
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
 
     mapping (uint => address) public characterToOwner;
     mapping (address => uint) ownerCharacterCount;
+
+    function _createCharacter(string _name, string _charType, uint _dna) internal {
+        uint rdy = (1 days) / 4;
+        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50, [], [])) - 1;
+
+        // Get ownership if zombie and inc total zombies owned.
+        characterToOwner[id] = msg.sender;
+        ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
+        NewCharacter(id, _name, _charType, _dna);
+    }
+
+    /// @notice internal - like private but can also be called by contracts that inherit from this one.
+    function _generateRandomness(string _name, string _charType) internal returns (uint) {
+        randNonce = randNonce.add(1);
+        return uint(keccak256(now, _name, _charType, randNonce, msg.sender)) % modShortener;
+    }
+
+
+    function createCharacter(string _name, string _charType) public {
+        require(ownerCharacterCount[msg.sender] == 0);// make sure they are the owner
+        uint randDna = _generateRandomness(_name, _charType);
+        _createCharacter(_name, _charType, randDna);
+    }
+
+    
 }
