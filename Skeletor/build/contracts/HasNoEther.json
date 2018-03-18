@@ -1,0 +1,594 @@
+{
+  "contractName": "HasNoEther",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "reclaimEther",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "constructor"
+    },
+    {
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x6060604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555060003414151561005357600080fd5b61037f806100626000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b146100645780639f727c27146100b9578063f2fde38b146100ce575b341561006257600080fd5b005b341561006f57600080fd5b610077610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100c457600080fd5b6100cc61012c565b005b34156100d957600080fd5b610105600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101fe565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561018757600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc3073ffffffffffffffffffffffffffffffffffffffff16319081150290604051600060405180830381858888f1935050505015156101fc57fe5b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561025957600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561029557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820c622511e61e2e9adb9ba86b94ffe425aa840c7e6104efaee0acca727501386440029",
+  "deployedBytecode": "0x606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b146100645780639f727c27146100b9578063f2fde38b146100ce575b341561006257600080fd5b005b341561006f57600080fd5b610077610107565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100c457600080fd5b6100cc61012c565b005b34156100d957600080fd5b610105600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506101fe565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561018757600080fd5b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff166108fc3073ffffffffffffffffffffffffffffffffffffffff16319081150290604051600060405180830381858888f1935050505015156101fc57fe5b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614151561025957600080fd5b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff161415151561029557600080fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550505600a165627a7a72305820c622511e61e2e9adb9ba86b94ffe425aa840c7e6104efaee0acca727501386440029",
+  "sourceMap": "487:803:66:-;;;519:10:70;511:5;;:18;;;;;;;;;;;;;;;;;;983:1:66;970:9;:14;962:23;;;;;;;;487:803;;;;;;",
+  "deployedSourceMap": "487:803:66:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;240:20:70;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1202:86:66;;;;;;;;;;;;;;858:183:70;;;;;;;;;;;;;;;;;;;;;;;;;;;;240:20;;;;;;;;;;;;;:::o;1202:86:66:-;671:5:70;;;;;;;;;;;657:19;;:10;:19;;;649:28;;;;;;;;1258:5:66;;;;;;;;;;;:10;;:24;1269:4;:12;;;1258:24;;;;;;;;;;;;;;;;;;;;;;;1251:32;;;;;;1202:86::o;858:183:70:-;671:5;;;;;;;;;;;657:19;;:10;:19;;;649:28;;;;;;;;958:1;938:22;;:8;:22;;;;930:31;;;;;;;;999:8;971:37;;992:5;;;;;;;;;;;971:37;;;;;;;;;;;;1026:8;1018:5;;:16;;;;;;;;;;;;;;;;;;858:183;:::o",
+  "source": "pragma solidity ^0.4.18;\n\nimport \"./Ownable.sol\";\n\n\n/**\n * @title Contracts that should not own Ether\n * @author Remco Bloemen <remco@2π.com>\n * @dev This tries to block incoming ether to prevent accidental loss of Ether. Should Ether end up\n * in the contract, it will allow the owner to reclaim this ether.\n * @notice Ether can still be send to this contract by:\n * calling functions labeled `payable`\n * `selfdestruct(contract_address)`\n * mining directly to the contract address\n*/\ncontract HasNoEther is Ownable {\n\n  /**\n  * @dev Constructor that rejects incoming Ether\n  * @dev The `payable` flag is added so we can access `msg.value` without compiler warning. If we\n  * leave out payable, then Solidity will allow inheriting contracts to implement a payable\n  * constructor. By doing it this way we prevent a payable constructor from working. Alternatively\n  * we could use assembly to access msg.value.\n  */\n  function HasNoEther() public payable {\n    require(msg.value == 0);\n  }\n\n  /**\n   * @dev Disallows direct send by settings a default function without the `payable` flag.\n   */\n  function() external {\n  }\n\n  /**\n   * @dev Transfer all Ether held by the contract to the owner.\n   */\n  function reclaimEther() external onlyOwner {\n    assert(owner.send(this.balance));\n  }\n}\n",
+  "sourcePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/ownership/HasNoEther.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/ownership/HasNoEther.sol",
+      "exportedSymbols": {
+        "HasNoEther": [
+          3802
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 3769,
+        "name": "PragmaDirective",
+        "src": "0:24:66"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 4118,
+          "absolutePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/ownership/Ownable.sol",
+          "file": "./Ownable.sol",
+          "scope": 3803,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 3770,
+        "name": "ImportDirective",
+        "src": "26:23:66"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            4117
+          ],
+          "contractKind": "contract",
+          "documentation": "@title Contracts that should not own Ether\n@author Remco Bloemen <remco@2π.com>\n@dev This tries to block incoming ether to prevent accidental loss of Ether. Should Ether end up\nin the contract, it will allow the owner to reclaim this ether.\n@notice Ether can still be send to this contract by:\ncalling functions labeled `payable`\n`selfdestruct(contract_address)`\nmining directly to the contract address",
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            3802,
+            4117
+          ],
+          "name": "HasNoEther",
+          "scope": 3803
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": [
+                null
+              ]
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Ownable",
+                  "referencedDeclaration": 4117,
+                  "type": "contract Ownable"
+                },
+                "id": 3771,
+                "name": "UserDefinedTypeName",
+                "src": "510:7:66"
+              }
+            ],
+            "id": 3772,
+            "name": "InheritanceSpecifier",
+            "src": "510:7:66"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": true,
+              "modifiers": [
+                null
+              ],
+              "name": "HasNoEther",
+              "payable": true,
+              "scope": 3802,
+              "stateMutability": "payable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3773,
+                "name": "ParameterList",
+                "src": "938:2:66"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3774,
+                "name": "ParameterList",
+                "src": "956:0:66"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6614,
+                              "type": "function (bool) pure",
+                              "value": "require"
+                            },
+                            "id": 3775,
+                            "name": "Identifier",
+                            "src": "962:7:66"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "==",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "value",
+                                  "referencedDeclaration": null,
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 6611,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 3776,
+                                    "name": "Identifier",
+                                    "src": "970:3:66"
+                                  }
+                                ],
+                                "id": 3777,
+                                "name": "MemberAccess",
+                                "src": "970:9:66"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "30",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 0",
+                                  "value": "0"
+                                },
+                                "id": 3778,
+                                "name": "Literal",
+                                "src": "983:1:66"
+                              }
+                            ],
+                            "id": 3779,
+                            "name": "BinaryOperation",
+                            "src": "970:14:66"
+                          }
+                        ],
+                        "id": 3780,
+                        "name": "FunctionCall",
+                        "src": "962:23:66"
+                      }
+                    ],
+                    "id": 3781,
+                    "name": "ExpressionStatement",
+                    "src": "962:23:66"
+                  }
+                ],
+                "id": 3782,
+                "name": "Block",
+                "src": "956:34:66"
+              }
+            ],
+            "id": 3783,
+            "name": "FunctionDefinition",
+            "src": "919:71:66"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "",
+              "payable": false,
+              "scope": 3802,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3784,
+                "name": "ParameterList",
+                "src": "1105:2:66"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3785,
+                "name": "ParameterList",
+                "src": "1117:0:66"
+              },
+              {
+                "attributes": {
+                  "statements": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3786,
+                "name": "Block",
+                "src": "1117:5:66"
+              }
+            ],
+            "id": 3787,
+            "name": "FunctionDefinition",
+            "src": "1097:25:66"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "name": "reclaimEther",
+              "payable": false,
+              "scope": 3802,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3788,
+                "name": "ParameterList",
+                "src": "1223:2:66"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3791,
+                "name": "ParameterList",
+                "src": "1245:0:66"
+              },
+              {
+                "attributes": {
+                  "arguments": [
+                    null
+                  ]
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "argumentTypes": null,
+                      "overloadedDeclarations": [
+                        null
+                      ],
+                      "referencedDeclaration": 4091,
+                      "type": "modifier ()",
+                      "value": "onlyOwner"
+                    },
+                    "id": 3789,
+                    "name": "Identifier",
+                    "src": "1235:9:66"
+                  }
+                ],
+                "id": 3790,
+                "name": "ModifierInvocation",
+                "src": "1235:9:66"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 6602,
+                              "type": "function (bool) pure",
+                              "value": "assert"
+                            },
+                            "id": 3792,
+                            "name": "Identifier",
+                            "src": "1251:6:66"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": false,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "bool",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_uint256",
+                                      "typeString": "uint256"
+                                    }
+                                  ],
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "send",
+                                  "referencedDeclaration": null,
+                                  "type": "function (uint256) returns (bool)"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 4065,
+                                      "type": "address",
+                                      "value": "owner"
+                                    },
+                                    "id": 3793,
+                                    "name": "Identifier",
+                                    "src": "1258:5:66"
+                                  }
+                                ],
+                                "id": 3794,
+                                "name": "MemberAccess",
+                                "src": "1258:10:66"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "balance",
+                                  "referencedDeclaration": null,
+                                  "type": "uint256"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 6736,
+                                      "type": "contract HasNoEther",
+                                      "value": "this"
+                                    },
+                                    "id": 3795,
+                                    "name": "Identifier",
+                                    "src": "1269:4:66"
+                                  }
+                                ],
+                                "id": 3796,
+                                "name": "MemberAccess",
+                                "src": "1269:12:66"
+                              }
+                            ],
+                            "id": 3797,
+                            "name": "FunctionCall",
+                            "src": "1258:24:66"
+                          }
+                        ],
+                        "id": 3798,
+                        "name": "FunctionCall",
+                        "src": "1251:32:66"
+                      }
+                    ],
+                    "id": 3799,
+                    "name": "ExpressionStatement",
+                    "src": "1251:32:66"
+                  }
+                ],
+                "id": 3800,
+                "name": "Block",
+                "src": "1245:43:66"
+              }
+            ],
+            "id": 3801,
+            "name": "FunctionDefinition",
+            "src": "1202:86:66"
+          }
+        ],
+        "id": 3802,
+        "name": "ContractDefinition",
+        "src": "487:803:66"
+      }
+    ],
+    "id": 3803,
+    "name": "SourceUnit",
+    "src": "0:1291:66"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-03-18T19:19:14.571Z"
+}
