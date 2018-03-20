@@ -82,11 +82,18 @@ contract CharacterFactory is Ownable {
         _createCharacter(_name, _charType, randDna);
     }
 
+
+    /// @notice These functions are for testing on https://remix.ethereum.org
     function GetCallingAddr() public view returns(address) {
         return msg.sender;
     }
+
+    function GetPassedAddr(address _addr) public view returns(address) {
+        return _addr;
+    }
     
     function GetAddrZero() public view returns(address) {
+        /// @notice 0x0000000000000000000000000000000000000000
         return address(0);
     }
 }
