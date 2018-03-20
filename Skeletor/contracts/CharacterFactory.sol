@@ -6,9 +6,10 @@ import "./zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./zeppelin-solidity/contracts/math/SafeMath.sol";
 
 
-/// @title SkeletorFactor
+/// @title CharacterFactory
 /// @author LD2045
 /// @dev This contract will be an attempt to make a game like World of Warcraft on Etheruem using the ERC721 standard. 
+/// @notice CharacterFactory is inheriting from Ownable.sol
 contract CharacterFactory is Ownable {
     /// @notice Declarations using SafeMath. These datatypes will be able to inherit contract.
     using SafeMath for uint256;
@@ -26,7 +27,8 @@ contract CharacterFactory is Ownable {
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum ArmourTypes {Chest, Helm, Boots, Leggings, Gloves, Shield}
     enum WeaponTypes {Sword, Axe, Wand, Gun, Hammer, Fist}
-    enum RareColor {Grey, Blue, DarkBlue, Purple} // <Left to right> <Common to rare>
+    /// @notice <Left to right> <Common to rare>
+    enum RareColor {Grey, Blue, DarkBlue, Purple} 
     ArmourTypes armour;
     WeaponTypes weapon;
     RareColor colorTracker;
@@ -80,5 +82,11 @@ contract CharacterFactory is Ownable {
         _createCharacter(_name, _charType, randDna);
     }
 
+    function GetCallingAddr() public view returns(address) {
+        return msg.sender;
+    }
     
+    function GetAddrZero() public view returns(address) {
+        return address(0);
+    }
 }
