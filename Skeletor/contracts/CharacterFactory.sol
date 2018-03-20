@@ -71,16 +71,16 @@ contract CharacterFactory is Ownable {
 
     /// @notice internal - like private but can also be called by contracts that inherit from this one.
     /// @dev In light that oracles do not exist, this psuedo-rand function will have to do.
-    function _generateRandomness(string _name, string _charType) internal returns (uint) {
+    function _generateRandomness(uint _modulus) internal returns (uint) {
         randNonce = randNonce.add(1);
-        return uint(keccak256(now, _name, _charType, randNonce, msg.sender)) % modShortener;
+        return uint(keccak256(now, randNonce, msg.sender, uint(1 days))) % _modulus;
     }
 
 
     function createCharacter(string _name, string _charType) public {
         /// @notice Make sure the owner has at most 3 characters.
         require(ownerCharacterCount[msg.sender] <= 3);
-        uint randDna = _generateRandomness(_name, _charType);
+        uint randDna = _generateRandomness(modShortener);
         _createCharacter(_name, _charType, randDna);
     }
 

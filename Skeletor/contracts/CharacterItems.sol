@@ -13,4 +13,10 @@ contract CharacterItems is CharacterFactory {
     Weapons weaponItem;
     CharType characterType;
     RareColor itemRarity;
+
+    function _calcWeaponDrop() internal returns(uint) {
+        /// @dev Will return the last 2 numbers (00-99) of a rand num.
+        uint rarityNumber = _generateRandomness(100);
+        return rarityNumber;
+    }
 }
