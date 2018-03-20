@@ -44,13 +44,13 @@ contract CharacterFactory is Ownable {
         string charType;
         uint dna;
         uint rdyTime;
-        uint32 level;
+        uint16 level;
         uint16 wins;
         uint16 losses;
         uint16 totalHealth;
         uint16 totalMana;
-        mapping (int8 => string) weapons;
-        mapping (int8 => string) armours;
+        mapping (int16 => string) weapons;
+        mapping (int16 => string) armours;
     }
 
     /// @notice An array(vector) of Characters. 
@@ -83,17 +83,18 @@ contract CharacterFactory is Ownable {
     }
 
 
-    /// @notice These functions are for testing on https://remix.ethereum.org
+    /// @notice These functions are for testing on https://remix.ethereum.org.
     function GetCallingAddr() public view returns(address) {
         return msg.sender;
     }
 
+    /// @notice When calling thsi function, passing in the address in quotes "_addr".
     function GetPassedAddr(address _addr) public view returns(address) {
         return _addr;
     }
     
+    /// @notice Returns 0x0000000000000000000000000000000000000000 always.
     function GetAddrZero() public view returns(address) {
-        /// @notice 0x0000000000000000000000000000000000000000
         return address(0);
     }
 }
