@@ -20,17 +20,19 @@ contract CharacterFactory is Ownable {
     /// @notice Events.
     event NewCharacter(uint id,
                     string name,
-                    string charType,
+                    CharType charType,
                     uint dna);
 
     /// @notice State variables, stored permanently in the blockchain.
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum ArmourTypes {Chest, Helm, Boots, Leggings, Gloves, Shield}
     enum WeaponTypes {Sword, Axe, Wand, Gun, Hammer, Fist}
+    enum CharType {Orc, Elf, Human, Dwarve}
     /// @notice <Left to right> <Common to rare>
     enum RareColor {Grey, Blue, DarkBlue, Purple} 
     ArmourTypes armour;
     WeaponTypes weapon;
+    CharType charPick;
     RareColor colorTracker;
     uint randNonce = 0;
     uint coowlDown = (1 days) / 4;
@@ -41,7 +43,7 @@ contract CharacterFactory is Ownable {
     struct Character {
         bool engaged;
         string name;
-        string charType;
+        CharType charType;
         uint dna;
         uint rdyTime;
         uint16 level;
@@ -59,28 +61,46 @@ contract CharacterFactory is Ownable {
     mapping (uint => address) public characterToOwner;
     mapping (address => uint) ownerCharacterCount;
 
-    function _createCharacter(string _name, string _charType, uint _dna) internal {
+    /// @dev Assures that only the owner of that character can proceed. 
+    modifier onlyOwnerOf(uint _zombieId) {
+        require(msg.sender == characterToOwner[_zombieId]);
+        _;
+    }
+
+    function _createCharacter(string _name, CharType _charType, uint _dna) internal {
         uint rdy = (1 days) / 4;
         uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50)) - 1;
 
-        // Get ownership if zombie and inc total zombies owned.
+        // Assign the character to the address.
         characterToOwner[id] = msg.sender;
+        // Inc that addresses total character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
+        // Trigger event.
         NewCharacter(id, _name, _charType, _dna);
     }
 
     /// @notice internal - like private but can also be called by contracts that inherit from this one.
-    function _generateRandomness(string _name, string _charType) internal returns (uint) {
+    /// @dev In light that oracles do not exist, this psuedo-rand function will have to do.
+    function _generateRandomness(string _name, CharType _charType) internal returns (uint) {
         randNonce = randNonce.add(1);
         return uint(keccak256(now, _name, _charType, randNonce, msg.sender)) % modShortener;
     }
 
 
-    function createCharacter(string _name, string _charType) public {
-        require(ownerCharacterCount[msg.sender] == 0);// make sure they are the owner
+    function createCharacter(string _name, CharType _charType) public {
+        /// @notice Make sure the owner has at most 3 characters.
+        require(ownerCharacterCount[msg.sender] <= 3);
         uint randDna = _generateRandomness(_name, _charType);
         _createCharacter(_name, _charType, randDna);
     }
+
+    
+
+
+
+
+
+
 
 
     /// @notice These functions are for testing on https://remix.ethereum.org.
