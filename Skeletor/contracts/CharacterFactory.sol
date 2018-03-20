@@ -41,7 +41,12 @@ contract CharacterFactory is Ownable {
         uint16 losses;
         uint16 totalHealth;
         uint16 totalMana;
-        mapping (int16 => string) weapons;
+        uint16 strength;
+        uint16 intelligence;
+        uint16 agility;
+        uint16 defense;
+        uint16 attackPower;
+        mapping (int16 => mapping (int16 => string)) weapons;
         mapping (int16 => string) armours;
     }
 
@@ -52,19 +57,26 @@ contract CharacterFactory is Ownable {
     mapping (address => uint) ownerCharacterCount;
 
     /// @dev Assures that only the owner of that character can proceed. 
-    modifier onlyOwnerOf(uint _zombieId) {
-        require(msg.sender == characterToOwner[_zombieId]);
+    modifier onlyOwnerOf(uint _characterId) {
+        require(msg.sender == characterToOwner[_characterId]);
         _;
     }
 
     function _createCharacter(string _name, string _charType, uint _dna) internal {
         uint rdy = (1 days) / 4;
-        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50, 10, 10, 10, 10, 25)) - 1;
 
         // Assign the character to the address.
         characterToOwner[id] = msg.sender;
         // Inc that addresses total character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
+
+        /// @dev Creates a new temporary memory struct, inits with the given character & copies it over to storage.
+        Character storage char = characters[id];
+        /// @notice Copies it to storage here.
+        char.weapons[0][0] = "Fist";
+        char.armours[0] = "Fist";
+
         // Trigger event.
         NewCharacter(id, _name, _charType, _dna);
     }
