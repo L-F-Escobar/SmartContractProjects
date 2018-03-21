@@ -33,8 +33,8 @@ contract CharacterFactory is Ownable {
                     uint dna);
 
     /// @notice State variables, stored permanently in the blockchain.
-    uint randNonce = 0;
-    uint modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
+    uint internal randNonce = 0;
+    uint internal modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
 
     struct Statistics {
         uint16 wins;
@@ -61,7 +61,6 @@ contract CharacterFactory is Ownable {
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
-    Statistics[] public characterStatistics;
 
     /// @notice Dictionaries.
     mapping (uint => address) public characterToOwner;
@@ -73,19 +72,23 @@ contract CharacterFactory is Ownable {
         _;
     }
 
+    /// @dev Internal function which creates a new character with default settings. Ownership for the new chracter is assigned to the calling address.
     function _createCharacter(string _name, string _charType, uint _dna) internal {
-        // characterStatistics.push(CharacterStats(0,0,100,50,10,10,10,10,25)) - 1;
+        /// @dev Will return the id of the character
         uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
 
+        /// @dev Assign default settings to a character.
         Character storage char = characters[id];
         char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
+        char.weapons[0] = Weapon.Fist;
+        char.armour[0] = Armour.Boots;
+        char.armour[1] = Armour.Leggings;
 
-        // Assign the character to the address.
+        /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
-        // Inc that addresses total character count.
+        /// @notice SafeMath increment the total acount of the owner.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
-
-        // Trigger event.
+        /// @notice Trigger event.
         NewCharacter(id, _name, _charType, _dna);
     }
 
@@ -96,10 +99,9 @@ contract CharacterFactory is Ownable {
         return uint(keccak256(now, randNonce, msg.sender, uint(1 days))) % _modulus;
     }
 
-
+    /// @dev If the address triggering this accoutn has 2 characters they will not be able to make another. 
     function createCharacter(string _name, string _charType) public {
-        /// @notice Make sure the owner has at most 3 characters.
-        require(ownerCharacterCount[msg.sender] <= 3);
+        require(ownerCharacterCount[msg.sender] <= 2);
         uint randDna = _generateRandomness(modShortener);
         _createCharacter(_name, _charType, randDna);
     }
