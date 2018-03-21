@@ -1,1 +1,37 @@
-*.json
+# .gitignore
+
+# Database
+assets/
+
+# Configuration
+.env
+config.json
+config.js
+contig-staging.json
+constants.js
+
+# Logs
+logs/
+.logs/
+
+# Build Files
+build/contracts
+build/
+
+# Dependencies
+node_modules/
+
+# Cache
+
+# Python
+.pyc
+*.pyc
+.project
+.pydevproject
+__pycache__
+
+# Editors
+.vscode
+
+# Operating System
+.DS_Store
