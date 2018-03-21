@@ -4,6 +4,7 @@ pragma solidity ^0.4.18;
 //import "./zeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 import "./zeppelin-solidity/contracts/ownership/Ownable.sol";
 import "./zeppelin-solidity/contracts/math/SafeMath.sol";
+import "./iterable_mapping.sol";
 
 
 /// @title CharacterFactory
@@ -16,6 +17,10 @@ contract CharacterFactory is Ownable {
     using SafeMath for uint32;
     using SafeMath for uint16;
     using SafeMath for uint8;
+
+    /// @notice Declarations using iterable_mapping. These datatypes will be able to inherit from contract and allow my mappings to be iterable.
+    using IterableMapping for mapping(uint => string);
+    using IterableMapping for mapping(address => uint);
 
     /// @notice Events.
     event NewCharacter(uint id,
@@ -71,6 +76,7 @@ contract CharacterFactory is Ownable {
         // Inc that addresses total character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
 
+        ///////http://solidity.readthedocs.io/en/v0.4.21/types.html#mappings
         /// @dev Creates a new temporary memory struct, inits with the given character & copies it over to storage.
         Character storage char = characters[id];
         /// @notice Copies it to storage here.

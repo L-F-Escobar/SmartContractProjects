@@ -1,4 +1,5 @@
 /// @dev Models a uint -> uint mapping where it is possible to iterate over all keys.
+/// @notice https://github.com/ethereum/dapp-bin/blob/master/library/iterable_mapping.sol
 library IterableMapping {
 
     struct itmap {
