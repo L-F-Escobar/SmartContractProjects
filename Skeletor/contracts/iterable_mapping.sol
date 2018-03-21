@@ -8,9 +8,15 @@ library IterableMapping {
         uint size;
     }
 
-    struct IndexValue { uint keyIndex; uint value; }
+    struct IndexValue { 
+        uint keyIndex; 
+        uint value; 
+    }
 
-    struct KeyFlag { uint key; bool deleted; }
+    struct KeyFlag { 
+        uint key; 
+        bool deleted; 
+    }
 
     function insert(itmap storage self, uint key, uint value) returns (bool replaced) {
         uint keyIndex = self.data[key].keyIndex;
@@ -64,10 +70,14 @@ library IterableMapping {
     }
 }
 
-// How to use it:
+
+
+/// @notice How to use it.
 contract User {
+
     // Just a struct holding our data.
     IterableMapping.itmap data;
+
     // Insert something
     function insert(uint k, uint v) returns (uint size) {
         // Actually calls itmap_impl.insert, auto-supplying the first parameter for us.
@@ -75,6 +85,7 @@ contract User {
         // We can still access members of the struct - but we should take care not to mess with them.
         return data.size;
     }
+
     // Computes the sum of all stored data.
     function sum() returns (uint s) {
         for (var i = IterableMapping.iterate_start(data); IterableMapping.iterate_valid(data, i); i = IterableMapping.iterate_next(data, i)) {
@@ -82,4 +93,5 @@ contract User {
             s += value;
         }
     }
+
 }
