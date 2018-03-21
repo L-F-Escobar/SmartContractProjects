@@ -22,6 +22,10 @@ contract CharacterFactory is Ownable {
     using IterableMapping for mapping(uint => string);
     using IterableMapping for mapping(address => uint);
 
+    /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
+    enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
+    enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
+
     /// @notice Events.
     event NewCharacter(uint id,
                     string name,
@@ -30,18 +34,9 @@ contract CharacterFactory is Ownable {
 
     /// @notice State variables, stored permanently in the blockchain.
     uint randNonce = 0;
-    uint coowlDown = (1 days) / 4;
-    uint digits = 16;
-    uint modShortener = 10 ** digits; // can later use the modulus operator % to shorten an integer to 16 digits.
-    uint cooldownTime = 7 days;
+    uint modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
 
-    struct Character {
-        bool engaged;
-        string name;
-        string charType;
-        uint dna;
-        uint rdyTime;
-        uint16 level;
+    struct Statistics {
         uint16 wins;
         uint16 losses;
         uint16 totalHealth;
@@ -51,13 +46,24 @@ contract CharacterFactory is Ownable {
         uint16 agility;
         uint16 defense;
         uint16 attackPower;
-        mapping (int16 => mapping (int16 => string)) weapons;
-        mapping (int16 => string) armours;
+    }
+
+    struct Character {
+        bool engaged;
+        string name;
+        string charType;
+        uint dna;
+        uint16 level;
+        mapping (uint => Statistics) stats;
+        mapping (uint => Weapon) weapons;
+        mapping (uint => Armour) armour;
     }
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
+    Statistics[] public characterStatistics;
 
+    /// @notice Dictionaries.
     mapping (uint => address) public characterToOwner;
     mapping (address => uint) ownerCharacterCount;
 
@@ -68,20 +74,16 @@ contract CharacterFactory is Ownable {
     }
 
     function _createCharacter(string _name, string _charType, uint _dna) internal {
-        uint rdy = (1 days) / 4;
-        uint id = characters.push(Character(false, _name, _charType, _dna, rdy, 1, 0, 0, 100, 50, 10, 10, 10, 10, 25)) - 1;
+        // characterStatistics.push(CharacterStats(0,0,100,50,10,10,10,10,25)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
+
+        Character storage char = characters[id];
+        char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
 
         // Assign the character to the address.
         characterToOwner[id] = msg.sender;
         // Inc that addresses total character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
-
-        ///////http://solidity.readthedocs.io/en/v0.4.21/types.html#mappings
-        /// @dev Creates a new temporary memory struct, inits with the given character & copies it over to storage.
-        Character storage char = characters[id];
-        /// @notice Copies it to storage here.
-        char.weapons[0][0] = "Fist";
-        char.armours[0] = "Fist";
 
         // Trigger event.
         NewCharacter(id, _name, _charType, _dna);

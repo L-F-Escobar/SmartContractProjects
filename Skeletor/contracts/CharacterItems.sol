@@ -6,9 +6,9 @@ import "./CharacterFactory.sol";
 /// @dev This contract introduces drop mechanics. Drops & their rarity are calculated and returned with the internal functions below.
 /// @notice Every internal function returns its drop/rarity.
 contract CharacterItems is CharacterFactory {
-    /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
-    enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
-    enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
+    // /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
+    // enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
+    // enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
     /// @notice <Left to right> <Common to rare>
     enum Rarity {White, LightBlue, DarkBlue, Purple, Orange} // 0,1,2,3,4
 

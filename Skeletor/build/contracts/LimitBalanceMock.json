@@ -2,15 +2,6 @@
   "contractName": "LimitBalanceMock",
   "abi": [
     {
-      "constant": false,
-      "inputs": [],
-      "name": "limitedDeposit",
-      "outputs": [],
-      "payable": true,
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
       "name": "limit",
@@ -23,195 +14,320 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "limitedDeposit",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
     }
   ],
-  "bytecode": "0x60606040526103e8806000819055505060d78061001d6000396000f3006060604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806386f3d0cd14604e578063a4d66daf146056575b600080fd5b6054607c565b005b3415606057600080fd5b606660a5565b6040518082815260200191505060405180910390f35b6000543073ffffffffffffffffffffffffffffffffffffffff16311115151560a357600080fd5b565b600054815600a165627a7a7230582066ff6b03e026127bf499b9da48fecea501c595d0dcbe87094d2debfe9ae0aaa80029",
-  "deployedBytecode": "0x6060604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806386f3d0cd14604e578063a4d66daf146056575b600080fd5b6054607c565b005b3415606057600080fd5b606660a5565b6040518082815260200191505060405180910390f35b6000543073ffffffffffffffffffffffffffffffffffffffff16311115151560a357600080fd5b565b600054815600a165627a7a7230582066ff6b03e026127bf499b9da48fecea501c595d0dcbe87094d2debfe9ae0aaa80029",
-  "sourceMap": "92:117:44:-;;;134:4;580:6:4;572:5;:14;;;;521:70;92:117:44;;;;;;",
-  "deployedSourceMap": "92:117:44:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;145:61;;;;;;372:20:4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;145:61:44;724:5:4;;708:4;:12;;;:21;;700:30;;;;;;;;145:61:44:o;372:20:4:-;;;;:::o",
-  "source": "pragma solidity ^0.4.18;\n\n\nimport \"../LimitBalance.sol\";\n\n\n// mock class using LimitBalance\ncontract LimitBalanceMock is LimitBalance(1000) {\n\n  function limitedDeposit() public payable limitedPayable {\n  }\n\n}\n",
-  "sourcePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/mocks/LimitBalanceMock.sol",
+  "bytecode": "0x60606040526103e8806000819055505060d78061001d6000396000f3006060604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806386f3d0cd14604e578063a4d66daf146056575b600080fd5b6054607c565b005b3415606057600080fd5b606660a5565b6040518082815260200191505060405180910390f35b6000543073ffffffffffffffffffffffffffffffffffffffff16311115151560a357600080fd5b565b600054815600a165627a7a7230582032a8e80a1bf0a96c870ab130a87e4702277256d80474ae1b73e5c4e615dd864c0029",
+  "deployedBytecode": "0x6060604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806386f3d0cd14604e578063a4d66daf146056575b600080fd5b6054607c565b005b3415606057600080fd5b606660a5565b6040518082815260200191505060405180910390f35b6000543073ffffffffffffffffffffffffffffffffffffffff16311115151560a357600080fd5b565b600054815600a165627a7a7230582032a8e80a1bf0a96c870ab130a87e4702277256d80474ae1b73e5c4e615dd864c0029",
+  "sourceMap": "99:122:48:-;;;141:4;598:6:8;590:5;:14;;;;538:72;99:122:48;;;;;;",
+  "deployedSourceMap": "99:122:48:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;154:62;;;;;;383:20:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;154:62:48;749:5:8;;733:4;:12;;;:21;;725:30;;;;;;;;154:62:48:o;383:20:8:-;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\r\n\r\n\r\nimport \"../LimitBalance.sol\";\r\n\r\n\r\n// mock class using LimitBalance\r\ncontract LimitBalanceMock is LimitBalance(1000) {\r\n\r\n  function limitedDeposit() public payable limitedPayable {\r\n  }\r\n\r\n}\r\n",
+  "sourcePath": "C:\\Users\\Luis.Escobar-Driver\\Documents\\SmartContractProjects\\Skeletor\\contracts\\zeppelin-solidity\\contracts\\mocks\\LimitBalanceMock.sol",
   "ast": {
-    "attributes": {
-      "absolutePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/mocks/LimitBalanceMock.sol",
-      "exportedSymbols": {
-        "LimitBalanceMock": [
-          2695
-        ]
-      }
+    "absolutePath": "/C/Users/Luis.Escobar-Driver/Documents/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/mocks/LimitBalanceMock.sol",
+    "exportedSymbols": {
+      "LimitBalanceMock": [
+        3567
+      ]
     },
-    "children": [
+    "id": 3568,
+    "nodeType": "SourceUnit",
+    "nodes": [
       {
-        "attributes": {
-          "literals": [
-            "solidity",
-            "^",
-            "0.4",
-            ".18"
-          ]
-        },
-        "id": 2684,
-        "name": "PragmaDirective",
-        "src": "0:24:44"
+        "id": 3556,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".18"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:48"
       },
       {
-        "attributes": {
-          "SourceUnit": 355,
-          "absolutePath": "/home/ancientevil/SmartContractProjects/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/LimitBalance.sol",
-          "file": "../LimitBalance.sol",
-          "scope": 2696,
-          "symbolAliases": [
-            null
-          ],
-          "unitAlias": ""
-        },
-        "id": 2685,
-        "name": "ImportDirective",
-        "src": "27:29:44"
+        "absolutePath": "/C/Users/Luis.Escobar-Driver/Documents/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/LimitBalance.sol",
+        "file": "../LimitBalance.sol",
+        "id": 3557,
+        "nodeType": "ImportDirective",
+        "scope": 3568,
+        "sourceUnit": 1227,
+        "src": "30:29:48",
+        "symbolAliases": [],
+        "unitAlias": ""
       },
       {
-        "attributes": {
-          "contractDependencies": [
-            354
-          ],
-          "contractKind": "contract",
-          "documentation": null,
-          "fullyImplemented": true,
-          "linearizedBaseContracts": [
-            2695,
-            354
-          ],
-          "name": "LimitBalanceMock",
-          "scope": 2696
-        },
-        "children": [
+        "baseContracts": [
           {
-            "children": [
+            "arguments": [
               {
-                "attributes": {
-                  "contractScope": null,
-                  "name": "LimitBalance",
-                  "referencedDeclaration": 354,
-                  "type": "contract LimitBalance"
+                "argumentTypes": null,
+                "hexValue": "31303030",
+                "id": 3559,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "141:4:48",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_1000_by_1",
+                  "typeString": "int_const 1000"
                 },
-                "id": 2686,
-                "name": "UserDefinedTypeName",
-                "src": "121:12:44"
-              },
-              {
-                "attributes": {
-                  "argumentTypes": null,
-                  "hexvalue": "31303030",
-                  "isConstant": false,
-                  "isLValue": false,
-                  "isPure": true,
-                  "lValueRequested": false,
-                  "subdenomination": null,
-                  "token": "number",
-                  "type": "int_const 1000",
-                  "value": "1000"
-                },
-                "id": 2687,
-                "name": "Literal",
-                "src": "134:4:44"
+                "value": "1000"
               }
             ],
-            "id": 2688,
-            "name": "InheritanceSpecifier",
-            "src": "121:18:44"
-          },
-          {
-            "attributes": {
-              "constant": false,
-              "implemented": true,
-              "isConstructor": false,
-              "name": "limitedDeposit",
-              "payable": true,
-              "scope": 2695,
-              "stateMutability": "payable",
-              "superFunction": null,
-              "visibility": "public"
+            "baseName": {
+              "contractScope": null,
+              "id": 3558,
+              "name": "LimitBalance",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1226,
+              "src": "128:12:48",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_LimitBalance_$1226",
+                "typeString": "contract LimitBalance"
+              }
             },
-            "children": [
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2689,
-                "name": "ParameterList",
-                "src": "168:2:44"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2692,
-                "name": "ParameterList",
-                "src": "201:0:44"
-              },
-              {
-                "attributes": {
-                  "arguments": [
-                    null
-                  ]
-                },
-                "children": [
-                  {
-                    "attributes": {
-                      "argumentTypes": null,
-                      "overloadedDeclarations": [
-                        null
-                      ],
-                      "referencedDeclaration": 353,
-                      "type": "modifier ()",
-                      "value": "limitedPayable"
-                    },
-                    "id": 2690,
-                    "name": "Identifier",
-                    "src": "186:14:44"
-                  }
-                ],
-                "id": 2691,
-                "name": "ModifierInvocation",
-                "src": "186:14:44"
-              },
-              {
-                "attributes": {
-                  "statements": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2693,
-                "name": "Block",
-                "src": "201:5:44"
-              }
-            ],
-            "id": 2694,
-            "name": "FunctionDefinition",
-            "src": "145:61:44"
+            "id": 3560,
+            "nodeType": "InheritanceSpecifier",
+            "src": "128:18:48"
           }
         ],
-        "id": 2695,
-        "name": "ContractDefinition",
-        "src": "92:117:44"
+        "contractDependencies": [
+          1226
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3567,
+        "linearizedBaseContracts": [
+          3567,
+          1226
+        ],
+        "name": "LimitBalanceMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 3565,
+              "nodeType": "Block",
+              "src": "210:6:48",
+              "statements": []
+            },
+            "id": 3566,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 3563,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3562,
+                  "name": "limitedPayable",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 1225,
+                  "src": "195:14:48",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "195:14:48"
+              }
+            ],
+            "name": "limitedDeposit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3561,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "177:2:48"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 3564,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "210:0:48"
+            },
+            "scope": 3567,
+            "src": "154:62:48",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3568,
+        "src": "99:122:48"
       }
     ],
-    "id": 2696,
-    "name": "SourceUnit",
-    "src": "0:210:44"
+    "src": "0:223:48"
+  },
+  "legacyAST": {
+    "absolutePath": "/C/Users/Luis.Escobar-Driver/Documents/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/mocks/LimitBalanceMock.sol",
+    "exportedSymbols": {
+      "LimitBalanceMock": [
+        3567
+      ]
+    },
+    "id": 3568,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3556,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".18"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:48"
+      },
+      {
+        "absolutePath": "/C/Users/Luis.Escobar-Driver/Documents/SmartContractProjects/Skeletor/contracts/zeppelin-solidity/contracts/LimitBalance.sol",
+        "file": "../LimitBalance.sol",
+        "id": 3557,
+        "nodeType": "ImportDirective",
+        "scope": 3568,
+        "sourceUnit": 1227,
+        "src": "30:29:48",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": [
+              {
+                "argumentTypes": null,
+                "hexValue": "31303030",
+                "id": 3559,
+                "isConstant": false,
+                "isLValue": false,
+                "isPure": true,
+                "kind": "number",
+                "lValueRequested": false,
+                "nodeType": "Literal",
+                "src": "141:4:48",
+                "subdenomination": null,
+                "typeDescriptions": {
+                  "typeIdentifier": "t_rational_1000_by_1",
+                  "typeString": "int_const 1000"
+                },
+                "value": "1000"
+              }
+            ],
+            "baseName": {
+              "contractScope": null,
+              "id": 3558,
+              "name": "LimitBalance",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1226,
+              "src": "128:12:48",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_LimitBalance_$1226",
+                "typeString": "contract LimitBalance"
+              }
+            },
+            "id": 3560,
+            "nodeType": "InheritanceSpecifier",
+            "src": "128:18:48"
+          }
+        ],
+        "contractDependencies": [
+          1226
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3567,
+        "linearizedBaseContracts": [
+          3567,
+          1226
+        ],
+        "name": "LimitBalanceMock",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 3565,
+              "nodeType": "Block",
+              "src": "210:6:48",
+              "statements": []
+            },
+            "id": 3566,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [
+              {
+                "arguments": [],
+                "id": 3563,
+                "modifierName": {
+                  "argumentTypes": null,
+                  "id": 3562,
+                  "name": "limitedPayable",
+                  "nodeType": "Identifier",
+                  "overloadedDeclarations": [],
+                  "referencedDeclaration": 1225,
+                  "src": "195:14:48",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_modifier$__$",
+                    "typeString": "modifier ()"
+                  }
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "195:14:48"
+              }
+            ],
+            "name": "limitedDeposit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3561,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "177:2:48"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 3564,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "210:0:48"
+            },
+            "scope": 3567,
+            "src": "154:62:48",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3568,
+        "src": "99:122:48"
+      }
+    ],
+    "src": "0:223:48"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+    "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "1.0.1",
-  "updatedAt": "2018-03-18T19:19:14.556Z"
+  "schemaVersion": "2.0.0",
+  "updatedAt": "2018-03-21T19:51:18.278Z"
 }
