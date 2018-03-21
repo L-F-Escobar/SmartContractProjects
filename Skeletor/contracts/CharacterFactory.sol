@@ -76,7 +76,7 @@ contract CharacterFactory is Ownable {
     }
 
     /// @dev Internal function which creates a new character with default settings. Ownership for the new chracter is assigned to the calling address.
-    function _createCharacter(string _name, string _charType, uint _dna) internal {
+    function _createCharacter(string _name, string _charType, uint _dna) private {
         /// @dev Will return the id of the character
         uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
 
