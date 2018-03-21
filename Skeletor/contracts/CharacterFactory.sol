@@ -21,6 +21,9 @@ contract CharacterFactory is Ownable {
     /// @notice Declarations using iterable_mapping. These datatypes will be able to inherit from contract and allow my mappings to be iterable.
     using IterableMapping for mapping(uint => string);
     using IterableMapping for mapping(address => uint);
+    using IterableMapping for mapping (uint => Statistics);
+    using IterableMapping for mapping (uint => Weapon);
+    using IterableMapping for mapping (uint => Armour);
 
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
