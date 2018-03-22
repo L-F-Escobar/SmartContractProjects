@@ -39,27 +39,25 @@ contract CharacterFactory is Ownable {
     uint internal randNonce = 0;
     uint internal modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
 
-    struct Statistics {
-        uint16 wins;
-        uint16 losses;
-        uint16 totalHealth;
-        uint16 totalMana;
-        uint16 strength;
-        uint16 intelligence;
-        uint16 agility;
-        uint16 defense;
-        uint16 attackPower;
+    struct Statistics { uint16 wins;
+                        uint16 losses;
+                        uint16 totalHealth;
+                        uint16 totalMana;
+                        uint16 strength;
+                        uint16 intelligence;
+                        uint16 agility;
+                        uint16 defense;
+                        uint16 attackPower;
     }
 
-    struct Character {
-        bool engaged;
-        string name;
-        string charType;
-        uint dna;
-        uint16 level;
-        mapping (uint => Statistics) stats;
-        mapping (uint => Weapon) weapons;
-        mapping (uint => Armour) armour;
+    struct Character { bool engaged;
+                       string name;
+                       string charType;
+                       uint dna;
+                       uint16 level;
+                       mapping (uint => Statistics) stats;
+                       mapping (uint => Weapon) weapons;
+                       mapping (uint => Armour) armour;
     }
 
     /// @notice An array(vector) of Characters. 
@@ -80,7 +78,7 @@ contract CharacterFactory is Ownable {
         /// @dev Will return the id of the character
         uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
 
-        /// @dev Assign default settings to a character.
+        /// @dev Creates a new temporary memory struct, initialised with the given values and copies it over to storage.
         Character storage char = characters[id];
         char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
         char.weapons[0] = Weapon.Fist;
@@ -123,7 +121,7 @@ contract CharacterFactory is Ownable {
         return msg.sender;
     }
 
-    /// @notice When calling thsi function, passing in the address in quotes "_addr".
+    /// @notice When calling thsi function, pass in the address in quotes "_addr".
     function GetPassedAddr(address _addr) public view returns(address) {
         return _addr;
     }

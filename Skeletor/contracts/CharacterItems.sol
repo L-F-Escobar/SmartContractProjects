@@ -49,7 +49,7 @@ contract CharacterItems is CharacterFactory {
     function _calcArmourDrop() internal returns(Armour) {
         /// @dev Will return the last 2 numbers (00-99) of a rand num.
         uint8 armourNumber = uint8(_generateRandomness(100));
-        if (armourNumber < 15) { // 14% chance.
+        if (armourNumber < 15) { // 16% chance.
             return Armour.Chest;
         } else if (armourNumber > 15 && armourNumber <= 30) { // 15% chance.
             return Armour.Helm;
@@ -59,7 +59,7 @@ contract CharacterItems is CharacterFactory {
             return Armour.Leggings;
         } else if (armourNumber > 60 && armourNumber <= 75) { // 15% chance.
             return Armour.Gloves;
-        } else { // 26% chance.
+        } else { // 24% chance.
             return Armour.Shield;
         }
     }
