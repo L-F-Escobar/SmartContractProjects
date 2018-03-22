@@ -6,9 +6,6 @@ import "./CharacterFactory.sol";
 /// @dev This contract introduces drop mechanics. Drops & their rarity are calculated and returned with the internal functions below.
 /// @notice Every internal function returns its drop/rarity.
 contract CharacterItems is CharacterFactory {
-    // /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
-    // enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
-    // enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
     /// @notice <Left to right> <Common to rare>
     enum Rarity {White, LightBlue, DarkBlue, Purple, Orange} // 0,1,2,3,4
 
@@ -33,7 +30,7 @@ contract CharacterItems is CharacterFactory {
     function _calcWeaponDrop() internal returns(Weapon) {
         /// @dev Will return the last 2 numbers (00-99) of a rand num.
         uint8 weaponNumber = uint8(_generateRandomness(100));
-        if (weaponNumber < 15) { // 14% chance.
+        if (weaponNumber <= 15) { // 16% chance.
             return Weapon.Sword;
         } else if (weaponNumber > 15 && weaponNumber <= 30) { // 15% chance.
             return Weapon.Axe;
@@ -43,7 +40,7 @@ contract CharacterItems is CharacterFactory {
             return Weapon.Gun;
         } else if (weaponNumber > 60 && weaponNumber <= 75) { // 15% chance.
             return Weapon.Hammer;
-        } else { // 26% chance.
+        } else { // 24% chance.
             return Weapon.Fist;
         }
     }

@@ -104,7 +104,7 @@ contract CharacterFactory is Ownable {
 
     /// @dev If the address triggering this accoutn has 2 characters they will not be able to make another. 
     function createCharacter(string _name, string _charType) public {
-        require(ownerCharacterCount[msg.sender] <= 2);
+        require(ownerCharacterCount[msg.sender] < 2);
         uint randDna = _generateRandomness(modShortener);
         _createCharacter(_name, _charType, randDna);
     }
