@@ -7,15 +7,8 @@ import "./CharacterItems.sol";
 /// @dev 
 contract CharacterHelper is CharacterItems {
     /// @notice Fee structure defaults.
-    uint levelUpFee = 0.001 ether;
     uint buyWeaponFee = 0.0025 ether;
     uint buyArmourFee = 0.002 ether;
-
-    /// @dev Allows us to set a level threshold and test the characters level against it.
-    modifier _aboveLevel(uint16 _requiredLvl, uint _characterId) {
-        require(uint16(characters[_characterId].level) >= _requiredLvl);
-        _;
-    } 
 
     /// @dev Ensures that nothing can proceed unless a character is equal or above a determined level.
     modifier aboveLevel(uint8 _level, uint _characterId) {
@@ -33,16 +26,31 @@ contract CharacterHelper is CharacterItems {
         characters[_characterId].level = uint16(characters[_characterId].level.add(1));
     }
 
-    /// @dev The following 3 functions allow the owner to chance the default fees.
-    function changeLevelFee(uint _levelUpFee) external onlyOwner {
-        levelUpFee = _levelUpFee;
-    }
-
-    function changeWeaponFee(uint _buyWeaponFee) external  onlyOwner {
+    /// @dev The following 2 functions allow the owner to change the default fees.
+    function changeWeaponFee(uint _buyWeaponFee) external onlyOwner {
         buyWeaponFee = _buyWeaponFee;
     }
 
     function changeArmourFee(uint _buyArmourFee) external  onlyOwner {
         buyArmourFee = _buyArmourFee;
+    }
+
+    function buyWeaponCrate(uint characterId) external payable {
+        require(msg.value == buyWeaponFee);
+        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+        Character storage char = characters[characterId];
+        Weapon wep = _calcWeaponDrop();
+        uint pleaseWork = char.weapons.length();
+        char.weapons[pleaseWork] = wep;
+    }
+
+    function buyArmourCrate(uint characterId) external payable {
+        require(msg.value == buyArmourFee);
+        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+        Character storage char = characters[characterId];
+
+        char.armour[0] = Armour.Boots;
+        char.armour[1] = Armour.Leggings;
+
     }
 }
