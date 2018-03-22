@@ -2,7 +2,8 @@ pragma solidity ^0.4.18;
 
 import "./CharacterFactory.sol";
 
-
+/// @title CharacterItems
+/// @author LD2045
 /// @dev This contract introduces drop mechanics. Drops & their rarity are calculated and returned with the internal functions below.
 /// @notice Every internal function returns its drop/rarity.
 contract CharacterItems is CharacterFactory {
@@ -11,7 +12,6 @@ contract CharacterItems is CharacterFactory {
 
     /// @dev Returns the rarity of the weapon dropped. 
     function _calcWeaponRarity() internal returns(Rarity) {
-        /// @dev Will return the last 2 numbers (00-99) of a rand num.
         uint8 rarityNumber = uint8(_generateRandomness(100));
         if (rarityNumber == 0) { // 1% chance.
             return Rarity.Orange;
@@ -28,7 +28,6 @@ contract CharacterItems is CharacterFactory {
 
     /// @dev Returns the weapon type that is dropped.
     function _calcWeaponDrop() internal returns(Weapon) {
-        /// @dev Will return the last 2 numbers (00-99) of a rand num.
         uint8 weaponNumber = uint8(_generateRandomness(100));
         if (weaponNumber <= 15) { // 16% chance.
             return Weapon.Sword;
@@ -47,7 +46,6 @@ contract CharacterItems is CharacterFactory {
 
     /// @dev Returns the armour type that is dropped.
     function _calcArmourDrop() internal returns(Armour) {
-        /// @dev Will return the last 2 numbers (00-99) of a rand num.
         uint8 armourNumber = uint8(_generateRandomness(100));
         if (armourNumber < 15) { // 16% chance.
             return Armour.Chest;

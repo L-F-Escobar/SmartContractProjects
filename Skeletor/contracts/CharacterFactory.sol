@@ -63,23 +63,25 @@ contract CharacterFactory is Ownable {
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
 
-    /// @notice Dictionaries.
+    /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
-    mapping (address => uint) ownerCharacterCount;
+    mapping (address => uint) public ownerCharacterCount;
 
-    /// @dev Assures that only the owner of that character can proceed. 
+    /// @dev Ensures that only the owner of that character can proceed. 
     modifier onlyOwnerOf(uint _characterId) {
         require(msg.sender == characterToOwner[_characterId]);
         _;
     }
 
-    /// @dev Internal function which creates a new character with default settings. Ownership for the new chracter is assigned to the calling address.
+    /// @dev Creates a new character with default settings for character.
+    /// @notice Private function can only be used in this contract.
     function _createCharacter(string _name, string _charType, uint _dna) private {
-        /// @dev Will return the id of the character
+        /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
         uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
 
-        /// @dev Creates a new temporary memory struct, initialised with the given values and copies it over to storage.
+        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
+        /// @notice These are default settings.
         char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
         char.weapons[0] = Weapon.Fist;
         char.armour[0] = Armour.Boots;
@@ -87,14 +89,14 @@ contract CharacterFactory is Ownable {
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
-        /// @notice SafeMath increment the total acount of the owner.
+        /// @notice SafeMath; increment owners character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
         /// @notice Trigger event.
         NewCharacter(id, _name, _charType, _dna);
     }
 
+    /// @dev Insecure - need an oracle for true randonmess. 
     /// @notice internal - like private but can also be called by contracts that inherit from this one.
-    /// @dev In light that oracles do not exist, this psuedo-rand function will have to do.
     function _generateRandomness(uint _modulus) internal returns (uint) {
         randNonce = randNonce.add(1);
         return uint(keccak256(now, randNonce, msg.sender, uint(1 days))) % _modulus;
@@ -129,5 +131,9 @@ contract CharacterFactory is Ownable {
     /// @notice Returns 0x0000000000000000000000000000000000000000 always.
     function GetAddrZero() public view returns(address) {
         return address(0);
+    }
+
+    function ThisBalance() public onlyOwner {
+        owner.transfer(this.balance);
     }
 }
