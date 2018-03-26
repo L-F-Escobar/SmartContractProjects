@@ -7,10 +7,6 @@ import "./CharacterHelper.sol";
 /// @dev 
 contract BattleTimeLock is CharacterHelper {
     /// @dev Cannot proceed if both characters are not locked in a battle with each other.
-    //modifier isLocked(uint _charactersIdOne, uint _charactersIdTwo) {
-        //require(characters[_charactersIdOne].engaged == true && characters[_charactersIdTwo].engaged == true);
-        //_;
-    //}
     modifier isLocked(uint _battleId) {
         /// @dev Commented out characterIdTwo to demonstrate how one can use lockedBattles dynamically with characters to ensure that both players are locked in a battle with each other. 
         uint characterIdOne = lockedBattles[_battleId].characterIds[0];
@@ -27,7 +23,9 @@ contract BattleTimeLock is CharacterHelper {
     /// @dev A mapping of all active locked battles.
     mapping (uint => Locked) lockedBattles;    
     /// @dev Total number of active battles. REMEMBER, a battle takes 2 characters - therefore only increment this value when a battle is loaded with 2 characters.
-    uint public activeBattleCount;
+    uint public activeBattleCount = 0;
+    /// @dev Used to load characterIds into struct Locked. Can only be 0 or 1.
+    uint characterIdsModIndex = 0;
 
 }
 
@@ -48,7 +46,7 @@ contract CharacterAttack is BattleTimeLock {
                     uint _charactersIdTwo,
                     uint time);
 
-    BattleTimeLock battleTimeLock;
+    // BattleTimeLock battleTimeLock;
     /// @dev Key is the characterId, value are the battle stats.
     mapping (uint => BattleStatistics) public battleStats;
 
@@ -62,25 +60,41 @@ contract CharacterAttack is BattleTimeLock {
         _;
     }
 
-    function enterBattle(uint _characterid) public onlyOwnerOf(_characterid) notEngaged(_characterid) {
+    /// @dev This function prevents the same character fighting itself. Also locks in the character into battle - either to awaite another opponent or to begin the battle.
+    function _enterBattleLock(uint _characterid) public onlyOwnerOf(_characterid) notEngaged(_characterid) {
         /// @dev Character becomes engaged. Character can no longer join another battle until resolution. 
         characters[_characterid].engaged = true;
 
-        /// @dev Size is a binary int; either 0 or 1. Its sole purpose is to allow characters to be locked in battle within Locked structs array of size 2.
-        uint size = lockedBattles[activeBattleCount].characterIds.length;
+        /// @dev Lock that character into lockedBattles. characterIdsModIndex % 2 can only settle on 0 or 1.  
+        lockedBattles[activeBattleCount].characterIds[characterIdsModIndex%2] = _characterid;
 
-        /// @dev Switch statements are not currently supported by solidity.
-        /// @notice http://solidity.readthedocs.io/en/v0.4.21/control-structures.html
-        if(size == 0 || size == 1) {
-            lockedBattles[activeBattleCount].characterIds[size] = _characterid;
-            size = size.add(1);
-        } else if(size == 1) { // 
-            lockedBattles[activeBattleCount].characterIds[size] = _characterid;
-            size = 0;
+        /// @dev characterIdsModIndex only ever had a range in the program of 0-1. 
+        if (characterIdsModIndex == 1) {
+            /// @dev Resetting the mod index to 0 meaning that 2 players have been locked in battle.
+            characterIdsModIndex = characterIdsModIndex.sub(1);
+            /// @dev A battle is loaded with 2 players.
+            activeBattleCount = activeBattleCount.add(1);
         } else {
-
+            /// @dev First player has been locked - waiting for a second.
+            characterIdsModIndex = characterIdsModIndex.add(1);
         }
+    }
 
+    /// @dev Code to test on remix
+    function ReturnLockedBattles(uint index, uint charIndex) public returns(uint) {
+        return lockedBattles[index].characterIds[charIndex];
+    }
+
+    function GetCharacterModIndex() public returns(uint) {
+        return characterIdsModIndex;
+    }
+
+    function GetActiveBattleCount() public returns(uint) {
+        return activeBattleCount;
+    }
+
+    function GetIsEngaged(uint characterId) public returns(bool) {
+        return characters[characterId].engaged;
     }
 
 }
