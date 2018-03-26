@@ -6,21 +6,37 @@ import "./CharacterHelper.sol";
 /// @author LD2045
 /// @dev 
 contract BattleTimeLock is CharacterHelper {
-    modifier notEngaged(uint _charactersId) {
-        // require(_charactersIdOne != _charactersIdTwo);
+    /// @dev Cannot proceed if both characters are not locked in a battle with eac other.
+    //modifier isLocked(uint _charactersIdOne, uint _charactersIdTwo) {
+        //require(characters[_charactersIdOne].engaged == true && characters[_charactersIdTwo].engaged == true);
+        //_;
+    //}
+    modifier isLocked(uint _battleId) {
+        /// @dev Commented out characterIdTwo to demonstrate how one can use lockedBattles dynamically with characters to ensure that both players are locked in a battle with each other. 
+        uint characterIdOne = lockedBattles[_battleId].characterIds[0];
+        // uint characterIdTwo = lockedBattles[_battleId].characterIds[1]; // EXAMPLE 
+        require(characters[characterIdOne].engaged == true && characters[lockedBattles[_battleId].characterIds[1]].engaged == true);
         _;
-    }        
+    }
+
+    /// @dev Two characters are engaged in battle.
+    struct Locked {
+        uint[2] characterIds;
+    }
+
+    /// @dev A mapping of all locked battles.
+    mapping (uint => Locked) lockedBattles;         
 }
 
 /// @title CharacterHelper
 /// @author LD2045
 /// @dev 
-contract CharacterAttack is CharacterHelper {
+contract CharacterAttack is CharacterHelper, BattleTimeLock {
 
-    struct BattleStatistics { uint16 opponent;
-                        uint16 damageDone;
-                        uint16 damageTaken;
-                        uint16 time;
+    struct BattleStatistics { uint opponent;
+                        uint time;
+                        uint8 damageDone;
+                        uint8 damageTaken;
     }
 
     /// @notice Events.
