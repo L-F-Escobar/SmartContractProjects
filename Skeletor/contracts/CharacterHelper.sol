@@ -55,6 +55,26 @@ contract CharacterHelper is CharacterItems {
         char.armour[newArmourIndex] = armourDrop;
     }
 
+    /// @dev Returns all the characters of a specific address. Characters are returned in the form of their id within the characters arrsy.
+    function getCharacterByOwner(address _owner) external view returns (uint[]) {
+        /// @notice Memory variables are temporary. 
+        /// @dev Cheaper to build history than to make a call to the blockchain.
+        uint[] memory result = new uint[](ownerCharacterCount[_owner]);
+
+        /// @dev Functions as the index for result.
+        uint counter = 0;
+
+        /// @dev Traverse the length of the characters array, checking every character.
+        for(uint i = 0; i < characters.length; i++) {
+            if (characterToOwner[i] == _owner) {
+                result[counter] = i;
+                counter = counter.add(1);
+            }
+        }
+
+        return result;
+    }
+
     // /// @dev Code to test on remix
     // function GetWeapons(uint characterId) public returns(Weapon[10]) {
     //     return characters[characterId].weapons[0];
