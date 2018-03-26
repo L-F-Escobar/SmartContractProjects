@@ -39,9 +39,9 @@ contract CharacterHelper is CharacterItems {
         require(msg.value == buyWeaponFee);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-        Weapon wep = _calcWeaponDrop();
-        uint pleaseWork = char.weapons.length();
-        char.weapons[pleaseWork] = wep;
+        Weapon weaponDrop = _calcWeaponDrop();
+        uint newWeaponIndex = char.weapons[0].length;
+        char.weapons[0][newWeaponIndex] = weaponDrop;
     }
 
     function buyArmourCrate(uint characterId) external payable {

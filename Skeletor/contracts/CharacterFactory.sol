@@ -87,12 +87,12 @@ contract CharacterFactory is Ownable {
         /// @example A - notice that this is how a map is populated with an int key & a user defined struct as a value. 
         char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
 
-        /// @example B - notice that this is how a map is populated with an int key & a list of 10 user defined structs as a value.
+        /// @example B - notice that this is how a mapping is populated with an int key & a list of 10 user defined enums as a value.
         // char.weapons[0] = weaponsTest;
         char.weapons[0][0] = Weapon.Fist;
         // char.weapons[0][1] = Weapon.Sword; @example B - Continued.
         
-        /// @example C - notice this is how a map is populated with an int key & a user defined struct as a value.
+        /// @example C - notice this is how a map a user defined enaum array.
         char.armour[0] = Armour.Boots;
         char.armour[1] = Armour.Leggings;
 
