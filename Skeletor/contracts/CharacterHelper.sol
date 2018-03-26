@@ -53,4 +53,29 @@ contract CharacterHelper is CharacterItems {
         char.armour[1] = Armour.Leggings;
 
     }
+
+    /// @dev Code to test on remix
+    function GetWeapons(uint characterId) public returns(Weapon[10]) {
+        return characters[characterId].weapons[0];
+    }
+
+    function GetArmour(uint characterId) public returns(Armour[10]) {
+        return characters[characterId].armour;
+    }
+
+    function GetName(uint characterId) public returns(string) {
+        return characters[characterId].name;
+    }
+
+    function GetCharType(uint characterId) public returns(string) {
+        return characters[characterId].charType;
+    }
+
+    function GetStrength(uint characterId) public returns(uint16) {
+        return characters[characterId].stats[0].wins;
+    }
+
+    function GetTotalHealth(uint characterId) public returns(uint16) {
+        return characters[characterId].stats[0].totalHealth;
+    }
 }

@@ -85,7 +85,7 @@ contract CharacterFactory is Ownable {
         Character storage char = characters[id];
 
         /// @example A - notice that this is how a map is populated with an int key & a user defined struct as a value. 
-        char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
+        char.stats[0] = Statistics(0,0,100,50,10,10,10,12,25);
 
         /// @example B - notice that this is how a mapping is populated with an int key & a list of 10 user defined enums as a value.
         // char.weapons[0] = weaponsTest;
@@ -119,32 +119,4 @@ contract CharacterFactory is Ownable {
         uint randDna = _generateRandomness(modShortener);
         _createCharacter(_name, _charType, randDna);
     }
-
-    
-
-
-
-
-
-
-
-
-    // /// @notice These functions are for testing on https://remix.ethereum.org.
-    // function GetCallingAddr() public view returns(address) {
-    //     return msg.sender;
-    // }
-
-    // /// @notice When calling thsi function, pass in the address in quotes "_addr".
-    // function GetPassedAddr(address _addr) public view returns(address) {
-    //     return _addr;
-    // }
-    
-    // /// @notice Returns 0x0000000000000000000000000000000000000000 always.
-    // function GetAddrZero() public view returns(address) {
-    //     return address(0);
-    // }
-
-    // function ThisBalance() public onlyOwner {
-    //     owner.transfer(this.balance);
-    // }
 }
