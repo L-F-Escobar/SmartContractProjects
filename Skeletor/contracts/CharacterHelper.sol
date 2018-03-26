@@ -35,6 +35,7 @@ contract CharacterHelper is CharacterItems {
         buyArmourFee = _buyArmourFee;
     }
 
+    /// @dev Rudementary implementation of a user purchasing weapons crate. Rarity is not factored in yet.
     function buyWeaponCrate(uint characterId) external payable {
         require(msg.value == buyWeaponFee);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
@@ -44,38 +45,38 @@ contract CharacterHelper is CharacterItems {
         char.weapons[0][newWeaponIndex] = weaponDrop;
     }
 
+    /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
     function buyArmourCrate(uint characterId) external payable {
         require(msg.value == buyArmourFee);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-
-        char.armour[0] = Armour.Boots;
-        char.armour[1] = Armour.Leggings;
-
+        Armour armourDrop = _calcArmourDrop();
+        uint newArmourIndex = char.armour.length;
+        char.armour[newArmourIndex] = armourDrop;
     }
 
-    /// @dev Code to test on remix
-    function GetWeapons(uint characterId) public returns(Weapon[10]) {
-        return characters[characterId].weapons[0];
-    }
+    // /// @dev Code to test on remix
+    // function GetWeapons(uint characterId) public returns(Weapon[10]) {
+    //     return characters[characterId].weapons[0];
+    // }
 
-    function GetArmour(uint characterId) public returns(Armour[10]) {
-        return characters[characterId].armour;
-    }
+    // function GetArmour(uint characterId) public returns(Armour[10]) {
+    //     return characters[characterId].armour;
+    // }
 
-    function GetName(uint characterId) public returns(string) {
-        return characters[characterId].name;
-    }
+    // function GetName(uint characterId) public returns(string) {
+    //     return characters[characterId].name;
+    // }
 
-    function GetCharType(uint characterId) public returns(string) {
-        return characters[characterId].charType;
-    }
+    // function GetCharType(uint characterId) public returns(string) {
+    //     return characters[characterId].charType;
+    // }
 
-    function GetStrength(uint characterId) public returns(uint16) {
-        return characters[characterId].stats[0].wins;
-    }
+    // function GetStrength(uint characterId) public returns(uint16) {
+    //     return characters[characterId].stats[0].wins;
+    // }
 
-    function GetTotalHealth(uint characterId) public returns(uint16) {
-        return characters[characterId].stats[0].totalHealth;
-    }
+    // function GetTotalHealth(uint characterId) public returns(uint16) {
+    //     return characters[characterId].stats[0].totalHealth;
+    // }
 }
