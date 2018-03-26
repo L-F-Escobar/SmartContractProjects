@@ -7,15 +7,8 @@ import "./CharacterItems.sol";
 /// @dev 
 contract CharacterHelper is CharacterItems {
     /// @notice Fee structure defaults.
-    uint levelUpFee = 0.001 ether;
     uint buyWeaponFee = 0.0025 ether;
     uint buyArmourFee = 0.002 ether;
-
-    /// @dev Allows us to set a level threshold and test the characters level against it.
-    modifier _aboveLevel(uint16 _requiredLvl, uint _characterId) {
-        require(uint16(characters[_characterId].level) >= _requiredLvl);
-        _;
-    } 
 
     /// @dev Ensures that nothing can proceed unless a character is equal or above a determined level.
     modifier aboveLevel(uint8 _level, uint _characterId) {
@@ -33,16 +26,57 @@ contract CharacterHelper is CharacterItems {
         characters[_characterId].level = uint16(characters[_characterId].level.add(1));
     }
 
-    /// @dev The following 3 functions allow the owner to chance the default fees.
-    function changeLevelFee(uint _levelUpFee) external onlyOwner {
-        levelUpFee = _levelUpFee;
-    }
-
-    function changeWeaponFee(uint _buyWeaponFee) external  onlyOwner {
+    /// @dev The following 2 functions allow the owner to change the default fees.
+    function changeWeaponFee(uint _buyWeaponFee) external onlyOwner {
         buyWeaponFee = _buyWeaponFee;
     }
 
     function changeArmourFee(uint _buyArmourFee) external  onlyOwner {
         buyArmourFee = _buyArmourFee;
     }
+
+    /// @dev Rudementary implementation of a user purchasing weapons crate. Rarity is not factored in yet.
+    function buyWeaponCrate(uint characterId) external payable {
+        require(msg.value == buyWeaponFee);
+        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+        Character storage char = characters[characterId];
+        Weapon weaponDrop = _calcWeaponDrop();
+        uint newWeaponIndex = char.weapons[0].length;
+        char.weapons[0][newWeaponIndex] = weaponDrop;
+    }
+
+    /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
+    function buyArmourCrate(uint characterId) external payable {
+        require(msg.value == buyArmourFee);
+        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+        Character storage char = characters[characterId];
+        Armour armourDrop = _calcArmourDrop();
+        uint newArmourIndex = char.armour.length;
+        char.armour[newArmourIndex] = armourDrop;
+    }
+
+    // /// @dev Code to test on remix
+    // function GetWeapons(uint characterId) public returns(Weapon[10]) {
+    //     return characters[characterId].weapons[0];
+    // }
+
+    // function GetArmour(uint characterId) public returns(Armour[10]) {
+    //     return characters[characterId].armour;
+    // }
+
+    // function GetName(uint characterId) public returns(string) {
+    //     return characters[characterId].name;
+    // }
+
+    // function GetCharType(uint characterId) public returns(string) {
+    //     return characters[characterId].charType;
+    // }
+
+    // function GetStrength(uint characterId) public returns(uint16) {
+    //     return characters[characterId].stats[0].wins;
+    // }
+
+    // function GetTotalHealth(uint characterId) public returns(uint16) {
+    //     return characters[characterId].stats[0].totalHealth;
+    // }
 }

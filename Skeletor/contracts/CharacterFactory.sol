@@ -55,13 +55,15 @@ contract CharacterFactory is Ownable {
                        string charType;
                        uint dna;
                        uint16 level;
-                       mapping (uint => Statistics) stats;
-                       mapping (uint => Weapon) weapons;
-                       mapping (uint => Armour) armour;
+                       mapping (uint => Statistics) stats; /// @example A.
+                       mapping (uint => Weapon[10]) weapons; /// @example B. 
+                       Armour[10] armour;                    /// @example C. 
     }
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
+    Armour[10] armourTest;
+    Weapon[10] weaponsTest;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
@@ -75,22 +77,31 @@ contract CharacterFactory is Ownable {
 
     /// @dev Creates a new character with default settings for character.
     /// @notice Private function can only be used in this contract.
-    function _createCharacter(string _name, string _charType, uint _dna) private {
+    function _createCharacter(string _name, string _charType, uint _dna) private {  
         /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
-        uint id = characters.push(Character(false, _name, _charType, _dna, 1)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourTest)) - 1;
 
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
-        /// @notice These are default settings.
-        char.stats[0] = Statistics(0,0,100,50,10,10,10,10,25);
-        char.weapons[0] = Weapon.Fist;
+
+        /// @example A - notice that this is how a map is populated with an int key & a user defined struct as a value. 
+        char.stats[0] = Statistics(0,0,100,50,10,10,10,12,25);
+
+        /// @example B - notice that this is how a mapping is populated with an int key & a list of 10 user defined enums as a value.
+        // char.weapons[0] = weaponsTest;
+        char.weapons[0][0] = Weapon.Fist;
+        // char.weapons[0][1] = Weapon.Sword; @example B - Continued.
+        
+        /// @example C - notice this is how a map a user defined enaum array.
         char.armour[0] = Armour.Boots;
         char.armour[1] = Armour.Leggings;
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
+
         /// @notice SafeMath; increment owners character count.
         ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1);
+
         /// @notice Trigger event.
         NewCharacter(id, _name, _charType, _dna);
     }
@@ -107,33 +118,5 @@ contract CharacterFactory is Ownable {
         require(ownerCharacterCount[msg.sender] < 2);
         uint randDna = _generateRandomness(modShortener);
         _createCharacter(_name, _charType, randDna);
-    }
-
-    
-
-
-
-
-
-
-
-
-    /// @notice These functions are for testing on https://remix.ethereum.org.
-    function GetCallingAddr() public view returns(address) {
-        return msg.sender;
-    }
-
-    /// @notice When calling thsi function, pass in the address in quotes "_addr".
-    function GetPassedAddr(address _addr) public view returns(address) {
-        return _addr;
-    }
-    
-    /// @notice Returns 0x0000000000000000000000000000000000000000 always.
-    function GetAddrZero() public view returns(address) {
-        return address(0);
-    }
-
-    function ThisBalance() public onlyOwner {
-        owner.transfer(this.balance);
     }
 }
