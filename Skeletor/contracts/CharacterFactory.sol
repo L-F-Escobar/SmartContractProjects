@@ -101,12 +101,12 @@ contract CharacterFactory is Ownable {
         char.weapons[0][0] = Weapon.Fist;
         // char.weapons[0][1] = Weapon.Sword; @example B - Continued.
         
-        /// @example C - notice this is how a map a user defined enaum array.
+        /// @example C - assigning to the Armour array.
         char.armour[0] = Armour.Boots;
         char.armour[1] = Armour.Leggings;
 
         /// @example D - a vector, spits out the index + 1.
-        char.battleStats[0] = BattleStatistics(0, 0, 0, 0, 0);
+        // char.battleStats[0] = BattleStatistics(0, 0, 0, 0, 0); NOT NEEDED here for an example only
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
