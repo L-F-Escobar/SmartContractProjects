@@ -4,7 +4,6 @@ pragma solidity ^0.4.18;
 //import "./zeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 import "./Ownable.sol";
 import "./SafeMath.sol";
-import "./iterable_mapping.sol";
 
 
 /// @title CharacterFactory
@@ -61,13 +60,13 @@ contract CharacterFactory is Ownable {
         mapping (uint => CharacterStatistics) charStats; /// @example A.
         mapping (uint => Weapon[10]) weapons;            /// @example B. 
         Armour[10] armour;                               /// @example C. 
-        BattleStatistics[] battleStats;                  /// @example D.
+        mapping (uint => BattleStatistics) battleStats;  /// @example D.
     }
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
     Armour[10] armourBag;
-    BattleStatistics[] battleStatistics;
+    // BattleStatistics[] battleStatistics;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
@@ -90,7 +89,7 @@ contract CharacterFactory is Ownable {
     /// @notice Private function can only be used in this contract.
     function _createCharacter(string _name, string _charType, uint _dna) private {  
         /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
-        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourBag, battleStatistics)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourBag)) - 1;
 
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
@@ -107,7 +106,7 @@ contract CharacterFactory is Ownable {
         char.armour[1] = Armour.Leggings;
 
         /// @example D - a vector, spits out the index + 1.
-        // char.battleStats.push(BattleStatistics(0, 0, 0, 0, 0)); NOT NEEDED, just here for example purposes.
+        char.battleStats[0] = BattleStatistics(0, 0, 0, 0, 0);
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
