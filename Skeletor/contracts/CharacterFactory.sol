@@ -18,11 +18,6 @@ contract CharacterFactory is Ownable {
     using SafeMath for uint16;
     using SafeMath for uint8;
 
-    // /// @notice Declarations using iterable_mapping. These datatypes will be able to inherit from contract and allow my mappings to be iterable.
-    // using IterableMapping for mapping(uint => string);
-    // using IterableMapping for mapping(address => uint);
-    // using IterableMapping for mapping (uint => Statistics);
-
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
     enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
@@ -37,31 +32,42 @@ contract CharacterFactory is Ownable {
     uint internal randNonce = 0;
     uint internal modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
 
-    struct Statistics { uint16 wins;
-                        uint16 losses;
-                        uint16 totalHealth;
-                        uint16 totalMana;
-                        uint16 strength;
-                        uint16 intelligence;
-                        uint16 agility;
-                        uint16 defense;
-                        uint16 attackPower;
+    struct BattleStatistics { 
+        uint opponent;
+        uint startTime;
+        uint endTime;
+        uint8 damageDone;
+        uint8 damageTaken;
     }
 
-    struct Character { bool engaged;
-                       string name;
-                       string charType;
-                       uint dna;
-                       uint16 level;
-                       mapping (uint => Statistics) stats; /// @example A.
-                       mapping (uint => Weapon[10]) weapons; /// @example B. 
-                       Armour[10] armour;                    /// @example C. 
+    struct CharacterStatistics { 
+        uint16 wins;
+        uint16 losses;
+        uint16 totalHealth;
+        uint16 totalMana;
+        uint16 strength;
+        uint16 intelligence;
+        uint16 agility;
+        uint16 defense;
+        uint16 attackPower;
+    }
+
+    struct Character { 
+        bool engaged;
+        string name;
+        string charType;
+        uint dna;
+        uint16 level;
+        mapping (uint => CharacterStatistics) charStats; /// @example A.
+        mapping (uint => Weapon[10]) weapons;            /// @example B. 
+        Armour[10] armour;                               /// @example C. 
+        BattleStatistics[] battleStats;                  /// @example D.
     }
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
-    Armour[10] armourTest;
-    Weapon[10] weaponsTest;
+    Armour[10] armourBag;
+    BattleStatistics[] battleStatistics;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
@@ -73,26 +79,35 @@ contract CharacterFactory is Ownable {
         _;
     }
 
+    /// @dev If the address triggering this accoutn has 2 characters they will not be able to make another. 
+    function createCharacter(string _name, string _charType) public {
+        require(ownerCharacterCount[msg.sender] < 2);
+        uint randDna = _generateRandomness(modShortener);
+        _createCharacter(_name, _charType, randDna);
+    }
+
     /// @dev Creates a new character with default settings for character.
     /// @notice Private function can only be used in this contract.
     function _createCharacter(string _name, string _charType, uint _dna) private {  
         /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
-        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourTest)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourBag, battleStatistics)) - 1;
 
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
 
         /// @example A - notice that this is how a map is populated with an int key & a user defined struct as a value. 
-        char.stats[0] = Statistics(0,0,100,50,10,10,10,12,25);
+        char.charStats[0] = CharacterStatistics(0, 0, 100, 50, 10, 10, 10, 12, 25);
 
         /// @example B - notice that this is how a mapping is populated with an int key & a list of 10 user defined enums as a value.
-        // char.weapons[0] = weaponsTest;
         char.weapons[0][0] = Weapon.Fist;
         // char.weapons[0][1] = Weapon.Sword; @example B - Continued.
         
         /// @example C - notice this is how a map a user defined enaum array.
         char.armour[0] = Armour.Boots;
         char.armour[1] = Armour.Leggings;
+
+        /// @example D - a vector, spits out the index + 1.
+        // char.battleStats.push(BattleStatistics(0, 0, 0, 0, 0)); NOT NEEDED, just here for example purposes.
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
@@ -109,12 +124,5 @@ contract CharacterFactory is Ownable {
     function _generateRandomness(uint _modulus) internal returns (uint) {
         randNonce = randNonce.add(1);
         return uint(keccak256(now, randNonce, msg.sender, uint(1 days))) % _modulus;
-    }
-
-    /// @dev If the address triggering this accoutn has 2 characters they will not be able to make another. 
-    function createCharacter(string _name, string _charType) public {
-        require(ownerCharacterCount[msg.sender] < 2);
-        uint randDna = _generateRandomness(modShortener);
-        _createCharacter(_name, _charType, randDna);
     }
 }

@@ -34,21 +34,10 @@ contract BattleTimeLock is CharacterHelper {
 /// @dev 
 contract CharacterAttack is BattleTimeLock {
 
-    struct BattleStatistics { uint opponent;
-                        uint startTime;
-                        uint endTime;
-                        uint8 damageDone;
-                        uint8 damageTaken;
-    }
-
     /// @notice Events.
     event NewBattle(uint _charactersIdOne,
                     uint _charactersIdTwo,
                     uint time);
-
-    // BattleTimeLock battleTimeLock;
-    /// @dev Key is the characterId, value are the battle stats.
-    mapping (uint => BattleStatistics) public battleStats;
 
     modifier notEngaged(uint _charactersId) {
         require(characters[_charactersId].engaged == false);
