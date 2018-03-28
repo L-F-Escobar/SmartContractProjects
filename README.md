@@ -1,7 +1,8 @@
-# SmartContractProjects
+Having some fun with eth and erc721 games
 
-Some contract tutorials Ive done.
-
-CryptoZombies - ERC721 non-fungible zombie game
-
-BlockchainAPI - Python blockchain which can be accessed through an API
+Some resources I am using
+https://solidity.readthedocs.io/en/v0.3.1/solidity-in-depth.html
+https://github.com/trufflesuite/truffle
+http://truffleframework.com/docs/
+https://github.com/OpenZeppelin/zeppelin-solidity
+https://cryptozombies.io/en/course
