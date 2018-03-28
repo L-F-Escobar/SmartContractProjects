@@ -9,6 +9,11 @@ import "./CharacterHelper.sol";
 contract BattleTimeLock is CharacterHelper {
     /// @dev Cannot proceed if both characters are not locked in a battle with each other.
     modifier isLocked(uint _battleId) {
+        /// @dev Checks to make sure that 2 characters are locked in. ModIndx will only ever be 0 or 1.
+        /// @dev If ModIndex is 1, then there is 1 spot open within Locked.characterIds array that is open.
+        /// @dev If ModIndex os 0, then it is the first execution or the second spot has been filled.
+        /// @dev activeBattleCount > 0 ensures that it is not the first run.
+        require(characterIdsModIndex == 0 && activeBattleCount > 0);
         /// @dev Commented out characterIdTwo to demonstrate how one can use lockedBattles dynamically with characters to ensure that both players are locked in a battle with each other. 
         uint characterIdOne = lockedBattles[_battleId].characterIds[0];
         // uint characterIdTwo = lockedBattles[_battleId].characterIds[1]; // EXAMPLE 
@@ -18,6 +23,7 @@ contract BattleTimeLock is CharacterHelper {
 
     /// @dev Two characters are engaged in battle.
     struct Locked {
+        /// @dev This array.length will always equal two even if they are empty.
         uint[2] characterIds;
     }
 
@@ -71,41 +77,44 @@ contract CharacterAttack is BattleTimeLock {
     }
 
     /// @dev Code to test on remix
-    // function ReturnLockedBattles(uint index, uint charIndex) public returns(uint) {
-    //     return lockedBattles[index].characterIds[charIndex];
-    // }
+    function ReturnLockedBattles(uint index, uint charIndex) public returns(uint) {
+        return lockedBattles[index].characterIds[charIndex];
+    }
 
-    // function GetCharacterModIndex() public returns(uint) {
-    //     return characterIdsModIndex;
-    // }
+    function GetCharacterModIndex() public returns(uint) {
+        return characterIdsModIndex;
+    }
 
-    // function GetActiveBattleCount() public returns(uint) {
-    //     return activeBattleCount;
-    // }
+    function GetActiveBattleCount() public returns(uint) {
+        return activeBattleCount;
+    }
 
-    // function GetIsEngaged(uint characterId) public returns(bool) {
-    //     return characters[characterId].engaged;
-    // }
+    function GetIsEngaged(uint characterId) public returns(bool) {
+        return characters[characterId].engaged;
+    }
 
 
-    // function getWeaps(uint characterId, uint arr) public returns(WeaponStats) {
-    //     return characters[characterId].weapons[0][arr];
-    // }
+    function getWeaponAt(uint characterId, uint arr) public returns(Weapon) {
+        require(characters[characterId].weaponCounter > arr);
+        return characters[characterId].weapons[arr].weapon;
+    }
 
-    // function getWeapLength(uint characterId) public returns(uint) {
-    //     return characters[characterId].weapons[0].length;
-    // }
+    function getTotalWeapons(uint characterId) public returns(uint) {
+        return characters[characterId].weaponCounter;
+    }
 
-    // function getArmours(uint characterId, uint arr) public returns(ArmourStats) {
-    //     return characters[characterId].armour[0][arr];
-    // }
+    function getArmourAt(uint characterId, uint arr) public returns(Armour) {
+        require(characters[characterId].armourCounter > arr);
+        return characters[characterId].armour[arr].armour;
+    }
 
-    // function getarmourLength(uint characterId) public returns(uint) {
-    //     return characters[characterId].armour[0].length;
-    // }
+    function getTotalArmour(uint characterId) public returns(uint) {
+        return characters[characterId].armourCounter;
+    }
 
-    // function getCharStats(uint characterId) public returns(CharacterStatistics) {
-    //     return characters[characterId].charStats;
+    // /// @notice Will always be two in current form.
+    // function getLockedArrCount() public returns(uint) {
+    //     return lockedBattles[activeBattleCount-1].characterIds.length;
     // }
 
 }
