@@ -60,15 +60,17 @@ contract CharacterItems is CharacterFactory {
         }
     }
 
+    /// @dev Basic function to get a weapon. Must can be done to introduce stat probabilities.
     function getWeaponDrop() internal returns(WeaponStats) {
         Weapon weaponDrop = _calcWeaponDrop();
-        Rarity rarity = _calcWeaponRarity();
-        return (WeaponStats(rarity, weaponDrop, 10));
+        Rarity weaponRarity = _calcWeaponRarity();
+        return (WeaponStats(weaponRarity, weaponDrop, 10));
     }
 
+    /// @dev Basic function to get a piece of armour. Must can be done to introduce stat probabilities.
     function getArmourDrop() internal returns(ArmourStats) {
         Armour armourDrop = _calcArmourDrop();
-        Rarity rarity = _calcWeaponRarity();
-        return (ArmourStats(rarity, armourDrop, 10));
+        Rarity armourRarity = _calcWeaponRarity();
+        return (ArmourStats(armourRarity, armourDrop, 10));
     }
 }

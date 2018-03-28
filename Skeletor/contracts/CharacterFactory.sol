@@ -112,8 +112,10 @@ contract CharacterFactory is Ownable {
 
         /// @dev Key 0 is the only key that will ever be used; linked to struct arrays
         char.weapons[0] = WeaponStats(Rarity.White, Weapon.Fist, 4);
+        char.weaponCounter = char.weaponCounter.add(1);
         char.armour[0] = ArmourStats(Rarity.White, Armour.Boots, 2);
-        char.armour[0] = ArmourStats(Rarity.White, Armour.Leggings, 3);
+        char.armour[1] = ArmourStats(Rarity.White, Armour.Leggings, 3);
+        char.armourCounter = char.armourCounter.add(2);
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
