@@ -9,7 +9,7 @@ import "./CharacterFactory.sol";
 contract CharacterItems is CharacterFactory {
 
     /// @dev Returns the rarity of the weapon dropped. 
-    function _calcWeaponRarity() internal returns(Rarity) {
+    function _calcRarity() internal returns(Rarity) {
         uint8 rarityNumber = uint8(_generateRandomness(100));
         if (rarityNumber == 0) { // 1% chance.
             return Rarity.Orange;
@@ -63,14 +63,14 @@ contract CharacterItems is CharacterFactory {
     /// @dev Basic function to get a weapon. Must can be done to introduce stat probabilities.
     function getWeaponDrop() internal returns(WeaponStats) {
         Weapon weaponDrop = _calcWeaponDrop();
-        Rarity weaponRarity = _calcWeaponRarity();
+        Rarity weaponRarity = _calcRarity();
         return (WeaponStats(weaponRarity, weaponDrop, 10));
     }
 
     /// @dev Basic function to get a piece of armour. Must can be done to introduce stat probabilities.
     function getArmourDrop() internal returns(ArmourStats) {
         Armour armourDrop = _calcArmourDrop();
-        Rarity armourRarity = _calcWeaponRarity();
+        Rarity armourRarity = _calcRarity();
         return (ArmourStats(armourRarity, armourDrop, 10));
     }
 }
