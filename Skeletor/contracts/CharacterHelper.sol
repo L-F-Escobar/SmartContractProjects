@@ -40,9 +40,8 @@ contract CharacterHelper is CharacterItems {
         require(msg.value == buyWeaponFee);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-        Weapon weaponDrop = _calcWeaponDrop();
         uint newWeaponIndex = char.weapons[0].length;
-        char.weapons[0][newWeaponIndex] = weaponDrop;
+        char.weapons[0][newWeaponIndex] = getWeaponDrop();
     }
 
     /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
@@ -50,9 +49,8 @@ contract CharacterHelper is CharacterItems {
         require(msg.value == buyArmourFee);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-        Armour armourDrop = _calcArmourDrop();
-        uint newArmourIndex = char.armour.length;
-        char.armour[newArmourIndex] = armourDrop;
+        uint newArmourIndex = char.armour[0].length;
+        char.armour[0][newArmourIndex] = getArmourDrop();
     }
 
     /// @dev Returns all the characters of a specific address. Characters are returned in the form of their id within the characters arrsy.

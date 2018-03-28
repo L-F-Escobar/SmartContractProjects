@@ -7,8 +7,6 @@ import "./CharacterFactory.sol";
 /// @dev This contract introduces drop mechanics. Drops & their rarity are calculated and returned with the internal functions below.
 /// @notice Every internal function returns its drop/rarity.
 contract CharacterItems is CharacterFactory {
-    /// @notice <Left to right> <Common to rare>
-    enum Rarity {White, LightBlue, DarkBlue, Purple, Orange} // 0,1,2,3,4
 
     /// @dev Returns the rarity of the weapon dropped. 
     function _calcWeaponRarity() internal returns(Rarity) {
@@ -60,5 +58,17 @@ contract CharacterItems is CharacterFactory {
         } else { // 24% chance.
             return Armour.Shield;
         }
+    }
+
+    function getWeaponDrop() internal returns(WeaponStats) {
+        Weapon weaponDrop = _calcWeaponDrop();
+        Rarity rarity = _calcWeaponRarity();
+        return (WeaponStats(rarity, weaponDrop, 10));
+    }
+
+    function getArmourDrop() internal returns(ArmourStats) {
+        Armour armourDrop = _calcArmourDrop();
+        Rarity rarity = _calcWeaponRarity();
+        return (ArmourStats(rarity, armourDrop, 10));
     }
 }

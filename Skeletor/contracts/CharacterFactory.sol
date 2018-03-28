@@ -20,6 +20,8 @@ contract CharacterFactory is Ownable {
     /// @dev enums are explicitly convertible to and from all integer types but implicit conversion is not allowed.
     enum Armour {Chest, Helm, Boots, Leggings, Gloves, Shield} // 0,1,2,3,4,5
     enum Weapon {Sword, Axe, Wand, Gun, Hammer, Fist} // 0,1,2,3,4,5
+    /// @notice <Left to right> <Common to rare>
+    enum Rarity {White, LightBlue, DarkBlue, Purple, Orange} // 0,1,2,3,4
 
     /// @notice Events.
     event NewCharacter(uint id,
@@ -31,8 +33,20 @@ contract CharacterFactory is Ownable {
     uint internal randNonce = 0;
     uint internal modShortener = 10 ** 16; // can later use the modulus operator % to shorten an integer to 16 digits.
 
+    struct WeaponStats {
+        Rarity rarity;
+        Weapon weapon;
+        uint8 attackPower;
+    }
+
+    struct ArmourStats {
+        Rarity rarity;
+        Armour armour;
+        uint8 defensePower;
+    }
+
     struct BattleStatistics { 
-        uint opponent;
+        uint opponentId;
         uint startTime;
         uint endTime;
         uint8 damageDone;
@@ -51,22 +65,23 @@ contract CharacterFactory is Ownable {
         uint16 attackPower;
     }
 
+    /// @dev Solidity does not currently support struct arrays as variables within structs. Therefore, I must introduct a mapping which will only use key 0; mapping it to a struct arry
     struct Character { 
         bool engaged;
         string name;
         string charType;
         uint dna;
         uint16 level;
-        mapping (uint => CharacterStatistics) charStats; /// @example A.
-        mapping (uint => Weapon[10]) weapons;            /// @example B. 
-        Armour[10] armour;                               /// @example C. 
-        mapping (uint => BattleStatistics) battleStats;  /// @example D.
+        CharacterStatistics charStats;  
+        mapping (uint => WeaponStats[5]) weapons;  
+        mapping (uint => ArmourStats[10]) armour;              
+        mapping (uint => BattleStatistics) battleStats;  
     }
 
     /// @notice An array(vector) of Characters. 
     Character[] public characters;
-    Armour[10] armourBag;
-    // BattleStatistics[] battleStatistics;
+    ArmourStats[10] armourBag;
+    WeaponStats[5] weaponsBag;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
@@ -89,24 +104,14 @@ contract CharacterFactory is Ownable {
     /// @notice Private function can only be used in this contract.
     function _createCharacter(string _name, string _charType, uint _dna) private {  
         /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
-        uint id = characters.push(Character(false, _name, _charType, _dna, 1, armourBag)) - 1;
+        uint id = characters.push(Character(false, _name, _charType, _dna, 1, CharacterStatistics(0, 0, 100, 50, 10, 10, 10, 12, 25))) - 1;
 
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
 
-        /// @example A - notice that this is how a map is populated with an int key & a user defined struct as a value. 
-        char.charStats[0] = CharacterStatistics(0, 0, 100, 50, 10, 10, 10, 12, 25);
-
-        /// @example B - notice that this is how a mapping is populated with an int key & a list of 10 user defined enums as a value.
-        char.weapons[0][0] = Weapon.Fist;
-        // char.weapons[0][1] = Weapon.Sword; @example B - Continued.
-        
-        /// @example C - assigning to the Armour array.
-        char.armour[0] = Armour.Boots;
-        char.armour[1] = Armour.Leggings;
-
-        /// @example D - a vector, spits out the index + 1.
-        // char.battleStats[0] = BattleStatistics(0, 0, 0, 0, 0); NOT NEEDED here for an example only
+        /// @dev Key 0 is the only key that will ever be used; linked to struct arrays
+        char.weapons[0] = weaponsBag;
+        char.armour[0] = armourBag;
 
         /// @notice Assigning ownership to the new character.
         characterToOwner[id] = msg.sender;
