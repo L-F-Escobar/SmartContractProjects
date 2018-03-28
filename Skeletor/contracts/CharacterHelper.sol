@@ -35,23 +35,23 @@ contract CharacterHelper is CharacterItems {
         buyArmourFee = _buyArmourFee;
     }
 
-    /// @dev Rudementary implementation of a user purchasing weapons crate. Rarity is not factored in yet.
-    function buyWeaponCrate(uint characterId) external payable {
-        require(msg.value == buyWeaponFee);
-        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
-        Character storage char = characters[characterId];
-        uint newWeaponIndex = char.weapons[0].length;
-        char.weapons[0][newWeaponIndex] = getWeaponDrop();
-    }
+    // /// @dev 
+    // function buyWeaponCrate(uint characterId) external payable {
+    //     require(msg.value == buyWeaponFee);
+    //     /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+    //     Character storage char = characters[characterId];
+    //     uint newWeaponIndex = char.weapons[0].length;
+    //     char.weapons[char.weapons[0].length][newWeaponIndex] = getWeaponDrop();
+    // }
 
-    /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
-    function buyArmourCrate(uint characterId) external payable {
-        require(msg.value == buyArmourFee);
-        /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
-        Character storage char = characters[characterId];
-        uint newArmourIndex = char.armour[0].length;
-        char.armour[0][newArmourIndex] = getArmourDrop();
-    }
+    // /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
+    // function buyArmourCrate(uint characterId) external payable {
+    //     require(msg.value == buyArmourFee);
+    //     /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
+    //     Character storage char = characters[characterId];
+    //     uint newArmourIndex = char.armour[0].length;
+    //     char.armour[0][newArmourIndex] = getArmourDrop();
+    // }
 
     /// @dev Returns all the characters of a specific address. Characters are returned in the form of their id within the characters arrsy.
     function getCharacterByOwner(address _owner) external view returns (uint[]) {
