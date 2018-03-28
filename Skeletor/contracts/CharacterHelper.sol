@@ -35,24 +35,24 @@ contract CharacterHelper is CharacterItems {
         buyArmourFee = _buyArmourFee;
     }
 
-    /// @dev Rudementary implementation of a user purchasing weapons crate. Rarity is not factored in yet.
+    /// @dev 
     function buyWeaponCrate(uint characterId) external payable {
         require(msg.value == buyWeaponFee);
+        require(characters[characterId].weaponCounter <= 7);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-        Weapon weaponDrop = _calcWeaponDrop();
-        uint newWeaponIndex = char.weapons[0].length;
-        char.weapons[0][newWeaponIndex] = weaponDrop;
+        char.weapons[char.weaponCounter] = getWeaponDrop();
+        char.weaponCounter = char.weaponCounter.add(1);
     }
 
     /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
     function buyArmourCrate(uint characterId) external payable {
         require(msg.value == buyArmourFee);
+        require(characters[characterId].armourCounter <= 12);
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[characterId];
-        Armour armourDrop = _calcArmourDrop();
-        uint newArmourIndex = char.armour.length;
-        char.armour[newArmourIndex] = armourDrop;
+        char.armour[char.armourCounter] = getArmourDrop();
+        char.armourCounter = char.armourCounter.add(1);
     }
 
     /// @dev Returns all the characters of a specific address. Characters are returned in the form of their id within the characters arrsy.

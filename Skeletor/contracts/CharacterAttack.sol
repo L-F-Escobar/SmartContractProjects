@@ -1,4 +1,5 @@
-pragma solidity ^0.4.18;
+// pragma solidity ^0.4.18;
+pragma experimental ABIEncoderV2;
 
 import "./CharacterHelper.sol";
 
@@ -70,20 +71,41 @@ contract CharacterAttack is BattleTimeLock {
     }
 
     /// @dev Code to test on remix
-    function ReturnLockedBattles(uint index, uint charIndex) public returns(uint) {
-        return lockedBattles[index].characterIds[charIndex];
-    }
+    // function ReturnLockedBattles(uint index, uint charIndex) public returns(uint) {
+    //     return lockedBattles[index].characterIds[charIndex];
+    // }
 
-    function GetCharacterModIndex() public returns(uint) {
-        return characterIdsModIndex;
-    }
+    // function GetCharacterModIndex() public returns(uint) {
+    //     return characterIdsModIndex;
+    // }
 
-    function GetActiveBattleCount() public returns(uint) {
-        return activeBattleCount;
-    }
+    // function GetActiveBattleCount() public returns(uint) {
+    //     return activeBattleCount;
+    // }
 
-    function GetIsEngaged(uint characterId) public returns(bool) {
-        return characters[characterId].engaged;
-    }
+    // function GetIsEngaged(uint characterId) public returns(bool) {
+    //     return characters[characterId].engaged;
+    // }
+
+
+    // function getWeaps(uint characterId, uint arr) public returns(WeaponStats) {
+    //     return characters[characterId].weapons[0][arr];
+    // }
+
+    // function getWeapLength(uint characterId) public returns(uint) {
+    //     return characters[characterId].weapons[0].length;
+    // }
+
+    // function getArmours(uint characterId, uint arr) public returns(ArmourStats) {
+    //     return characters[characterId].armour[0][arr];
+    // }
+
+    // function getarmourLength(uint characterId) public returns(uint) {
+    //     return characters[characterId].armour[0].length;
+    // }
+
+    // function getCharStats(uint characterId) public returns(CharacterStatistics) {
+    //     return characters[characterId].charStats;
+    // }
 
 }
