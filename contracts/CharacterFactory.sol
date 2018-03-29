@@ -82,7 +82,7 @@ contract CharacterFactory is Ownable {
     }
 
     /// @notice An array(vector) of Characters. 
-    Character[] public characters;
+    Character[] characters;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;
@@ -102,7 +102,6 @@ contract CharacterFactory is Ownable {
     }
 
     /// @dev Creates a new character with default settings for character.
-    /// @notice Private function can only be used in this contract.
     function _createCharacter(string _name, string _charType, uint _dna) private {  
         /// @dev Will return the id of the character created which corresponds to that characters position in the character array.
         uint id = characters.push(Character(false, _name, _charType, _dna, 0, 0, 0, 1, CharacterStatistics(0, 0, 100, 50, 10, 10, 10, 12, 25))) - 1;
@@ -110,7 +109,7 @@ contract CharacterFactory is Ownable {
         /// @dev Creates a new temporary memory struct (char), initialised with the given values, and copies it over to storage.
         Character storage char = characters[id];
 
-        /// @dev Key 0 is the only key that will ever be used; linked to struct arrays
+        /// @dev Add default weapon & armour. Weapon bag is 7 array spots, Armour 12.
         char.weapons[0] = WeaponStats(Rarity.White, Weapon.Fist, 4);
         char.weaponCounter = char.weaponCounter.add(1);
         char.armour[0] = ArmourStats(Rarity.White, Armour.Boots, 2);
