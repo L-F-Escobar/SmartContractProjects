@@ -82,7 +82,7 @@ contract CharacterFactory is Ownable {
     }
 
     /// @notice An array(vector) of Characters. 
-    Character[] public characters;
+    Character[] characters;
 
     /// @notice Dictionaries that get the owners total characters & get a character owner from the characters id.
     mapping (uint => address) public characterToOwner;

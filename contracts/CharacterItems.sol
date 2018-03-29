@@ -8,6 +8,9 @@ import "./CharacterFactory.sol";
 /// @notice Every internal function returns its drop/rarity.
 contract CharacterItems is CharacterFactory {
 
+    event NewWeapon(WeaponStats weapon);
+    event NewArmour(ArmourStats armour);
+
     /// @dev Returns the rarity of the weapon dropped. 
     function _calcRarity() internal returns(Rarity) {
         uint8 rarityNumber = uint8(_generateRandomness(100));
@@ -64,6 +67,7 @@ contract CharacterItems is CharacterFactory {
     function getWeaponDrop() internal returns(WeaponStats) {
         Weapon weaponDrop = _calcWeaponDrop();
         Rarity weaponRarity = _calcRarity();
+        NewWeapon(WeaponStats(weaponRarity, weaponDrop, 10));
         return (WeaponStats(weaponRarity, weaponDrop, 10));
     }
 
@@ -71,6 +75,7 @@ contract CharacterItems is CharacterFactory {
     function getArmourDrop() internal returns(ArmourStats) {
         Armour armourDrop = _calcArmourDrop();
         Rarity armourRarity = _calcRarity();
+        NewArmour(ArmourStats(armourRarity, armourDrop, 10));
         return (ArmourStats(armourRarity, armourDrop, 10));
     }
 }
