@@ -34,6 +34,8 @@ contract SkeletorOwnership is CharacterBattle, ERC721 {
         Transfer(msg.sender, _to, _tokenId);
     }
 
+
+    /// !!!!!!!!!!!!!!!!!!!!!! WORK ON THESE TWO !!!!!!!!!!!!!!!!!!!!!!
     function approve(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
         characterApprovals[_tokenId] = _to;
         Approval(msg.sender, _to, _tokenId);
