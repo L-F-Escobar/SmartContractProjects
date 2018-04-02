@@ -45,7 +45,7 @@ contract CharacterHelper is CharacterItems {
         char.weaponCounter = char.weaponCounter.add(1);
     }
 
-    /// @dev Rudementary implementation of a user purchasing armour crate. Rarity is not factored in yet.
+    /// @dev Rudementary implementation of a user purchasing armour crate. 
     function buyArmourCrate(uint characterId) external payable {
         require(msg.value == buyArmourFee);
         require(characters[characterId].armourCounter <= 12);
@@ -71,7 +71,6 @@ contract CharacterHelper is CharacterItems {
                 counter = counter.add(1);
             }
         }
-
         return result;
     }
 }

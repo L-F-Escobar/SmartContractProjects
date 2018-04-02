@@ -53,7 +53,7 @@ contract CharacterBattle is BattleTimeLock {
         }
     }
 
-
+    /// @dev This will be left empty - another dev can implement this. 
     function _battle() private {
 
     }
