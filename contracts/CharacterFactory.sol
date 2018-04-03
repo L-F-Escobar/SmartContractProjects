@@ -1,7 +1,5 @@
 pragma solidity ^0.4.18;
 
-// not needed yet.
-//import "./zeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 import "./Ownable.sol";
 import "./SafeMath.sol";
 
@@ -24,10 +22,7 @@ contract CharacterFactory is Ownable {
     enum Rarity {White, LightBlue, DarkBlue, Purple, Orange} // 0,1,2,3,4
 
     /// @notice Events.
-    event NewCharacter(uint id,
-                    string name,
-                    string charType,
-                    uint dna);
+    event NewCharacter(uint id, string name, string charType, uint dna);
 
     /// @notice State variables, stored permanently in the blockchain.
     uint internal randNonce = 0;

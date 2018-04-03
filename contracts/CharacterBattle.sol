@@ -8,9 +8,12 @@ import "./BattleTimeLock.sol";
 /// @dev 
 contract CharacterBattle is BattleTimeLock {
 
+    /// @dev Some WoW battle formulas 
     /// damage = att * att / (att + def)
     /// ATTACK POWER: Atk*(1+.01(Pow))+(1+.10(Str))+(.10*RandBetween(0,Lck))
     /// DEFENSE POWER: Def+(1+.10(End))+(.10*RandBetween(0,Lck))
+    /// (Weapon Damage + Attack Power / 3.5 *  Weapon Speed) * Coefficient * Damage Multiplier
+    /// DPS = ( AvgBaseWdmg + Agility * BaseWspeed / 3.5 ) * Haste / BaseWspeed
 
     /// @notice Events.
     event NewBattle(uint _charactersIdOne, uint _charactersIdTwo);
@@ -50,7 +53,7 @@ contract CharacterBattle is BattleTimeLock {
         }
     }
 
-
+    /// @dev This will be left empty - another dev can implement this. 
     function _battle() private {
 
     }
