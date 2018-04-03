@@ -35,16 +35,23 @@ contract SkeletorOwnership is CharacterBattle, ERC721 {
     }
 
 
-    /// !!!!!!!!!!!!!!!!!!!!!! WORK ON THESE TWO !!!!!!!!!!!!!!!!!!!!!!
+    /// @dev The owner of the character can approve the transfer claim of said character.
     function approve(address _to, uint256 _tokenId) public onlyOwnerOf(_tokenId) {
         characterApprovals[_tokenId] = _to;
         Approval(msg.sender, _to, _tokenId);
     }
 
     function takeOwnership(uint256 _tokenId) public {
+        /// @dev Ensure that only approved users can claim ownership.
         require(characterApprovals[_tokenId] == msg.sender);
-        // address owner = ownerOf(_tokenId);
-        transfer(msg.sender, _tokenId);
+        address _oldOwner = characterToOwner[_tokenId];
+        /// @dev Subtract from old and inc for the new owner.
+        ownerCharacterCount[_oldOwner] = ownerCharacterCount[_oldOwner].sub(1); 
+        ownerCharacterCount[msg.sender] = ownerCharacterCount[msg.sender].add(1); 
+        /// @dev Tranfer ownership.
+        characterToOwner[_tokenId] = msg.sender;
+        /// @dev Declare the event.
+        Transfer(_oldOwner, msg.sender, _tokenId);
     }
 
 }
